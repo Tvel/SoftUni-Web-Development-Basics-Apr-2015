@@ -1,0 +1,12 @@
+#Options +FollowSymlinks
+RewriteEngine On
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteRule ^([^\.]+)$ $1.php [NC,L]
+#RewriteRule /action/(.*)/ index.php?action=$1&
+
+RewriteRule     /*\.(css|js|gif|png|jpe?g)$ - [NC,L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
+
