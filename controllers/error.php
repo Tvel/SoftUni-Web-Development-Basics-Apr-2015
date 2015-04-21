@@ -10,7 +10,7 @@ class Error_Controller {
 
     public function index($error = 'Error'){
 
-        $template = new Template('master\error.php');
+        $template = new Template('master/Error.php');
         $template->set('error', $error);
         $template->render();
     }

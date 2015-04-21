@@ -6,7 +6,7 @@ define( 'SITE_ROOT_URL', 'http://' . $_SERVER['HTTP_HOST'] .'/'. basename( dirna
 session_cache_limiter('none');
 session_start();
 require_once('system/config.php');
-require_once ( 'controllers/master.php');
+require_once('controllers/Master.php');
 $controller = 'Master';
 $method = 'index';
 $params = array();
@@ -41,7 +41,7 @@ if ( isset( $controller ) && file_exists( 'controllers/' . $controller . '.php' 
     }
 }
 else {
-    include_once 'controllers/error.php';
+    include_once 'controllers/Error.php';
     $controller_class =  ucfirst( 'error' ) . '_Controller';
     $instance = new $controller_class();
     call_user_func_array( array( $instance, 'index' ), array( 'Wrong controller '.$controller ) );

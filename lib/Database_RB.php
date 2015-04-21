@@ -20,16 +20,16 @@ class Database_RB {
 
 
         R::setup('mysql:host='.$db_host.';dbname='.$db_name.';charset=utf8', $db_login, $db_pass);
-        self::$instance = true;
+        //self::$instance = true;
     }
 
     public static function get() {
-        if (self::$instance === null) {
-
-            //die('something happened to db');
-            $class =  new self();
-            self::$instance = $class::get();
-        }
-        return self::$instance;
+//        if (self::$instance === null) {
+//
+//            //die('something happened to db');
+//            $class =  new self();
+//            self::$instance = $class::get();
+//        }
+//        return self::$instance;
     }
 }

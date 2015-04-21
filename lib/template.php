@@ -11,9 +11,9 @@ class Template
     {
         $this->viewDirectory = SITE_ROOT_DIR . 'view';
  
-		$this->header = $this->viewDirectory . SITE_DS . 'header.php';
-        $this->template = $this->viewDirectory . SITE_DS . $template;
-		$this->footer = $this->viewDirectory . SITE_DS . 'footer.php';
+		$this->header = $this->viewDirectory . '/' . 'header.php';
+        $this->template = $this->viewDirectory . '/' . $template;
+		$this->footer = $this->viewDirectory . '/' . 'footer.php';
     }
  
     public function set($var, $val)
