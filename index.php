@@ -11,6 +11,7 @@ $controller = 'Master';
 $method = 'index';
 $params = array();
 $url = null;
+
 if ( ! empty( $_GET['url'] ) ) {
     //$action = $_GET['url'];
     $url = trim($_GET['url'], '/');

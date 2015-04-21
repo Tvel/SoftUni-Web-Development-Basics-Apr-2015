@@ -12,9 +12,8 @@ spl_autoload_register(function ($class) {
 });
 
 
-$db_host  = "localhost";  //The host on which database run
-$db_name  = "softuni";  //Database name
-$db_login = "root";  //Database login
-$db_pass  = "";  //password
+define( 'DB_HOST', 'localhost' );
+define( 'DB_USERNAME', 'root' );
+define( 'DB_PASSWORD', '' );
+define( 'DB_DATABASE', 'softuni' );
 
-$db = new Database($db_host,$db_name,$db_login,$db_pass);
