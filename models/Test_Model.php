@@ -11,15 +11,15 @@ class Test_Model {
     private $db;
     public function __construct()
     {
-        $this->db = Database::get();
+
     }
 
     public function get_test()
     {
-        $db = Database::get();
-        $handle = $db->prepare('select * from test');
-        $handle->execute();
-        $result = $handle->fetchAll(\PDO::FETCH_OBJ);
+//        $db = Database_PDO::get();
+//        $handle = $db->prepare('select * from test');
+//        $handle->execute();
+        $result = R::findAll('test');
         return $result;
     }
 

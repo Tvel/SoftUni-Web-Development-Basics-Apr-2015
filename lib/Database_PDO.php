@@ -1,6 +1,6 @@
 <?php
 
-class Database
+class Database_PDO
 {
     public static $instance;
     private $db;
@@ -12,7 +12,8 @@ class Database
         $db_pass = DB_PASSWORD;
         $db_name = DB_DATABASE;
 
-        $this->db = new PDO('mysql:host='.$db_host.';dbname='.$db_name, $db_login, $db_pass);
+        $this->db = new PDO('mysql:host='.$db_host.';dbname='.$db_name.';charset=utf8', $db_login, $db_pass);
+        $this->db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
         self::$instance = $this->db;
     }
 
