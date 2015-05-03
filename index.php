@@ -2,7 +2,7 @@
 define( 'SITE_DS', DIRECTORY_SEPARATOR );
 define( 'SITE_ROOT_DIR', dirname( __FILE__ ) . SITE_DS );
 define( 'SITE_ROOT_PATH', basename( dirname( __FILE__ ) ) . SITE_DS );
-define( 'SITE_ROOT_URL', 'http://' . $_SERVER['HTTP_HOST'] .'/'. basename( dirname( __FILE__ ) ).'/' );
+define( 'SITE_ROOT_URL', 'http://' . $_SERVER['HTTP_HOST'] .'/' );//. basename( dirname( __FILE__ ) ).'/' );
 session_cache_limiter('none');
 session_start();
 require_once('system/config.php');
@@ -24,28 +24,38 @@ if ( ! empty( $_GET['url'] ) ) {
         }
         if (count($url) > 2) {
             $params = array_slice($url, 2);
+            new Parameters($params);
         }
     }
  }
 
-if ( isset( $controller ) && file_exists( 'controllers/' . $controller . '.php' ) ) {
-    include_once 'controllers/' . $controller . '.php';
-    $controller_class =  ucfirst( $controller ) . '_Controller';
-    $instance = new $controller_class();
+try {
+    if ( isset( $controller ) && file_exists( 'controllers/' . $controller . '.php' ) ) {
+        include_once 'controllers/' . $controller . '.php';
+        $controller_class =  ucfirst( $controller ) . '_Controller';
+        $instance = new $controller_class();
 
-    if( method_exists( $instance, $method ) ) {
-        call_user_func_array( array( $instance, $method ), array( $params ) );
-    } else {
-        // fallback to index
-        call_user_func_array( array( $instance, 'index' ), array() );
+        if( method_exists( $instance, $method ) ) {
+            call_user_func_array( array( $instance, $method ), array( $params ) );
+        } else {
+            // fallback to index
+            call_user_func_array( array( $instance, 'index' ), array() );
+        }
+    }
+    else {
+        include_once 'controllers/Error.php';
+        $controller_class =  ucfirst( 'error' ) . '_Controller';
+        $instance = new $controller_class();
+        call_user_func_array( array( $instance, 'index' ), array( 'Wrong controller '.$controller ) );
     }
 }
-else {
+catch ( Exception  $ex) {
     include_once 'controllers/Error.php';
     $controller_class =  ucfirst( 'error' ) . '_Controller';
     $instance = new $controller_class();
-    call_user_func_array( array( $instance, 'index' ), array( 'Wrong controller '.$controller ) );
+    call_user_func_array( array( $instance, 'index' ), array( $ex->getMessage() ) );
 }
+
 
 //ob_start();
 
@@ -76,6 +86,5 @@ var_dump($params);
 //echo 'SITE_ROOT_PATH : '.SITE_ROOT_PATH;
 //echo '<br />';
 //echo 'SITE_ROOT_URL : '.SITE_ROOT_URL;
-
 ?>
 
