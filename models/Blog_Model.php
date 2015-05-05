@@ -19,6 +19,14 @@ class Blog_Model {
         return $result;
     }
 
+    public function get_post($id){
+        $post = R::findOne('posts', 'id = ?', [$id]);
+        if ($post === null) {
+            throw new InvalidIdException("This page does not exist");
+        }
+        return $post;
+    }
+
     public function get_months($filter = null, $data = null){
 
         if ($filter == null) {
