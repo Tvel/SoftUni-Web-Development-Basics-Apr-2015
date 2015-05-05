@@ -13,9 +13,9 @@ class Blog_Controller {
         if ($page < 1){
             $page = 1;
         }
-
+        $number = 5; //5 items per page
         $blog_model = new Blog_Model();
-        $result = $blog_model->get_posts($page);
+        $result = $blog_model->get_posts($page, $number);
 
         $months = $blog_model->get_months();
         $tags = $blog_model->get_tags();
@@ -25,6 +25,18 @@ class Blog_Controller {
         $template->set('posts', $result);
         $template->set('months', $months);
         $template->set('tags', $tags);
+
+
+        $limit = $number * $page;
+        if ($limit >= $blog_model->num_posts()) {
+            $template->set('next_page', null);
+        }
+        else{
+            $template->set('next_page', $page+1);
+        }
+        if ($page == 1 ) { $template->set('prev_page',null);}
+        else {$template->set('prev_page', $page-1); }
+
         $template->render();
     }
 
@@ -73,22 +85,14 @@ class Blog_Controller {
         $template->set('post', $post);
 
         if (isset($_POST['comment_text'])){
+            $text = $_POST['comment_text'];
 
-            $comment = R::dispense('comments');
-            $comment->text = $_POST['comment_text'];
+            $name = null;
+            $email = null;
+            if (isset($_POST['comment_name'])  ) $name = $_POST['comment_name'];
+            if (isset($_POST['comment_email'])  )  $email = $_POST['comment_email'];
 
-            if(isset($_SESSION['userId'])){
-                $comment->users_id = $_SESSION['userId'];
-            }
-            else {
-                $comment->name = $_POST['comment_name'];
-                $comment->email = $_POST['comment_email'];
-            }
-
-
-
-            $post->ownCommentsList[] = $comment;
-            R::store($post);
+            $blog_model->new_comment($post, $text, $name, $email);
         }
 
         $template->render();

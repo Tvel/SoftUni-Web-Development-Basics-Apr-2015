@@ -2,13 +2,13 @@
 
 class Blog_Model {
 
-    public function get_posts($page)
+    public function get_posts($page, $number)
     {
-        $numOfPosts = R::count( 'posts' );
+        $numOfPosts = $this->num_posts();
 
-        // 5 per page
-        $limit = 5 * $page;
-        $start = $limit - 5;
+        // $number per page
+        $limit = $number * $page;
+        $start = $limit - $number;
         if ( ($start - $numOfPosts) > 0) {
             throw new Exception("Invalid page");
             //die("Invalid page");
@@ -17,6 +17,10 @@ class Blog_Model {
         $result = R::findAll('posts', ' ORDER BY date DESC LIMIT :start,:end ',
             [ ':start' => $start, ':end' => $limit  ]);
         return $result;
+    }
+
+    public function num_posts(){
+        return R::count( 'posts' );
     }
 
     public function get_post($id){
@@ -73,6 +77,23 @@ class Blog_Model {
 
         R::store($post);
         return $post->id;
+    }
 
+    public function new_comment($post, $text, $name = null, $email = null){
+
+        $comment = R::dispense('comments');
+        $comment->text = $text;
+        $comment->date = new DateTime('NOW');
+
+        if(isset($_SESSION['userId'])){
+            $comment->users_id = $_SESSION['userId'];
+        }
+        else {
+            $comment->name = $name;
+            $comment->email = $email;
+        }
+
+        $post->ownCommentsList[] = $comment;
+        R::store($post);
     }
 }
