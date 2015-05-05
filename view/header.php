@@ -29,8 +29,8 @@
                 <?php } ?>
 
                 <?php if (isset($_SESSION['userId'] ) ){ ?>
-                    <p>Hello, <?=$_SESSION['userName']?></p>
                     <a class="blog-nav-item pull-right" href="<?=SITE_ROOT_URL?>user/logout">Logout</a>
+                    <a class="blog-nav-item pull-right">Hello, <?=$_SESSION['userUsername']?></a>
                 <?php } else { ?>
                 <a class="blog-nav-item pull-right" href="<?=SITE_ROOT_URL?>user/login">Login</a>
                 <?php } ?>
