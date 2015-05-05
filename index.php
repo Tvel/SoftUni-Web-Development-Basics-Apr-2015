@@ -11,27 +11,34 @@ $controller = 'Master';
 $method = 'index';
 $params = array();
 $url = null;
+$controller_path = "";
 
 if ( ! empty( $_GET['url'] ) ) {
     //$action = $_GET['url'];
     $url = trim($_GET['url'], '/');
     $url = explode('/', $url);
 
-    if (count($url) > 0) {
-        $controller = $url[0];
-        if (count($url) > 1) {
-            $method = $url[1];
+    $offset = 0;
+    if ($url[0] === 'admin') {
+        $offset = 1;
+        $controller_path = "admin/";
+    }
+
+    if (count($url) > $offset) {
+        $controller = $url[$offset];
+        if (count($url) > ( $offset + 1 )) {
+            $method = $url[ $offset + 1 ];
         }
-        if (count($url) > 2) {
-            $params = array_slice($url, 2);
+        if (count($url) > ( $offset + 2 )) {
+            $params = array_slice($url, $offset + 2 );
             new Parameters($params);
         }
     }
  }
 
 try {
-    if ( isset( $controller ) && file_exists( 'controllers/' . $controller . '.php' ) ) {
-        include_once 'controllers/' . $controller . '.php';
+    if ( isset( $controller ) && file_exists( 'controllers/' . $controller_path . $controller . '.php' ) ) {
+        include_once 'controllers/' . $controller_path . $controller . '.php';
         $controller_class =  ucfirst( $controller ) . '_Controller';
         $instance = new $controller_class();
 
@@ -66,25 +73,24 @@ catch ( Exception  $ex) {
 
 
 
-//echo 'Action is: '.$action;
-//echo '<br />';
-//echo '<br /> URL ';
-//var_dump($url);
-//echo '<br /> Controller ';
-//var_dump($controller);
-//echo '<br /> Method ';
-//var_dump($method);
+
+echo '<br /> URL ';
+var_dump($url);
+echo '<br /> Controller ';
+var_dump($controller);
+echo '<br /> Method ';
+var_dump($method);
 echo '<br /> Params ';
 var_dump($params);
 
 //var_dump($_GET);
-//echo '<br />';
-//echo 'SITE_DS : '.SITE_DS;
-//echo '<br />';
-//echo 'SITE_ROOT_DIR : '.SITE_ROOT_DIR;
-//echo '<br />';
-//echo 'SITE_ROOT_PATH : '.SITE_ROOT_PATH;
-//echo '<br />';
-//echo 'SITE_ROOT_URL : '.SITE_ROOT_URL;
+echo '<br />';
+echo 'SITE_DS : '.SITE_DS;
+echo '<br />';
+echo 'SITE_ROOT_DIR : '.SITE_ROOT_DIR;
+echo '<br />';
+echo 'SITE_ROOT_PATH : '.SITE_ROOT_PATH;
+echo '<br />';
+echo 'SITE_ROOT_URL : '.SITE_ROOT_URL;
 ?>
 
