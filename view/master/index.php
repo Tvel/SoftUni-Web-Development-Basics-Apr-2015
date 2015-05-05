@@ -22,6 +22,18 @@
     }
     ?>
 
+    <div class="col-md-12">
+        <div class="col-md-6">
+            <?php if ($prev_page !== null) : ?>
+                <a class="pull-right" href="<?=SITE_ROOT_URL?>blog/index/<?=$prev_page?>"><- Newer posts</a>
+            <?php endif; ?>
+        </div>
+        <div class="col-md-6">
+            <?php if ($next_page !== null) : ?>
+                <a class="pull-left" href="<?=SITE_ROOT_URL?>blog/index/<?=$next_page?>">Older posts -></a>
+            <?php endif; ?>
+        </div>
+    </div>
 </div><!-- /.blog-main -->
 
 <?php include_once(SITE_ROOT_DIR . 'view/master/sidebar.php'); ?>
