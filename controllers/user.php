@@ -13,7 +13,9 @@ class User_Controller {
             $login_model = new Login_Model();
             try {
                 $login_model->login($username, $password);
-                //TODO: redirect to home
+
+                header("Location: ".SITE_ROOT_URL."master/index");
+                die();
             }
             catch (InvalidLoginUsernameException $ex){
                 $template->set('error', 'Invalid username');
@@ -27,6 +29,11 @@ class User_Controller {
     }
 
     public function logout () {
+        $login_model = new Login_Model();
+        $login_model->logout();
+
+        header("Location: ".SITE_ROOT_URL."master/index");
+        die();
 
     }
 
