@@ -1,3 +1,4 @@
+<div class="col-sm-8 blog-main">
     <?php
     foreach ($posts as $post) {
     ?>
@@ -18,20 +19,27 @@
         <p>TosilV SoftUni exam blog</p>
     </div>
     <div class="sidebar-module">
+        <h4>Tags</h4>
+        <ol class="list-unstyled">
+            <?php
+            foreach ($months as $month) {
+                ?>
+                <li><a href="<?=SITE_ROOT_URL?>master/date/<?=$month['year']?>/<?=$month['month']?>"><?=$month['month']?> <?=$month['year']?></a></li>
+            <?php
+            }
+            ?>
+        </ol>
+    </div>
+    <div class="sidebar-module">
         <h4>Archives</h4>
         <ol class="list-unstyled">
-            <li><a href="http://getbootstrap.com/examples/blog/#">March 2014</a></li>
-            <li><a href="http://getbootstrap.com/examples/blog/#">February 2014</a></li>
-            <li><a href="http://getbootstrap.com/examples/blog/#">January 2014</a></li>
-            <li><a href="http://getbootstrap.com/examples/blog/#">December 2013</a></li>
-            <li><a href="http://getbootstrap.com/examples/blog/#">November 2013</a></li>
-            <li><a href="http://getbootstrap.com/examples/blog/#">October 2013</a></li>
-            <li><a href="http://getbootstrap.com/examples/blog/#">September 2013</a></li>
-            <li><a href="http://getbootstrap.com/examples/blog/#">August 2013</a></li>
-            <li><a href="http://getbootstrap.com/examples/blog/#">July 2013</a></li>
-            <li><a href="http://getbootstrap.com/examples/blog/#">June 2013</a></li>
-            <li><a href="http://getbootstrap.com/examples/blog/#">May 2013</a></li>
-            <li><a href="http://getbootstrap.com/examples/blog/#">April 2013</a></li>
+            <?php
+            foreach ($months as $month) {
+            ?>
+            <li><a href="<?=SITE_ROOT_URL?>master/date/<?=$month['year']?>/<?=$month['month']?>"><?=$month['month']?> <?=$month['year']?></a></li>
+            <?php
+            }
+            ?>
         </ol>
     </div>
     <div class="sidebar-module">

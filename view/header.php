@@ -24,10 +24,16 @@
         <div class="container">
             <nav class="blog-nav">
                 <a class="blog-nav-item active" href="<?=SITE_ROOT_URL?>master/index/">Home</a>
-                <a class="blog-nav-item" href="<?=SITE_ROOT_URL?>examples/blog/#">New features</a>
-                <a class="blog-nav-item" href="<?=SITE_ROOT_URL?>examples/blog/#">Press</a>
-                <a class="blog-nav-item" href="<?=SITE_ROOT_URL?>examples/blog/#">New hires</a>
-                <a class="blog-nav-item" href="<?=SITE_ROOT_URL?>examples/blog/#">About</a>
+                <?php if (isset($_SESSION['userId'] ) ){ ?>
+                <a class="blog-nav-item" href="<?=SITE_ROOT_URL?>master/newpost">New post</a>
+                <?php } ?>
+
+                <?php if (isset($_SESSION['userId'] ) ){ ?>
+                    <p>Hello, <?=$_SESSION['userName']?></p>
+                    <a class="blog-nav-item pull-right" href="<?=SITE_ROOT_URL?>user/logout">Logout</a>
+                <?php } else { ?>
+                <a class="blog-nav-item pull-right" href="<?=SITE_ROOT_URL?>user/login">Login</a>
+                <?php } ?>
             </nav>
         </div>
     </div>
@@ -41,6 +47,6 @@
 
         <div class="row">
 
-            <div class="col-sm-8 blog-main">
+
 
 

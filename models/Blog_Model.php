@@ -24,4 +24,18 @@ class Blog_Model {
             [ ':start' => $start, ':end' => $limit  ]);
         return $result;
     }
+
+    public function get_months($filter = null, $data = null){
+
+        if ($filter == null) {
+           return R::getAll( 'SELECT distinct monthname(date) as month, year(date) as year FROM posts order by year(date) desc');
+        }
+
+        if ($filter === 'tags') {
+
+        }
+        if ($filter === 'user') {
+
+        }
+    }
 }

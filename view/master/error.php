@@ -1,2 +1,3 @@
-<div>This is an error message</div>
-<div><?=$error?></div>
+<div class="col-sm-12 blog-main">
+    <div class="alert alert-danger" role="alert"><?=$error?></div>
+</div>

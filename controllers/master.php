@@ -17,10 +17,12 @@ class Master_Controller {
         $blog_model = new Blog_Model();
         $result = $blog_model->get_posts($page);
 
+        $months = $blog_model->get_months();
 
         $template = new Template('master/index.php');
        // $template->set('put', 'putted');
         $template->set('posts', $result);
+        $template->set('months', $months);
         $template->render();
     }
 

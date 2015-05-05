@@ -68,12 +68,12 @@ catch ( Exception  $ex) {
 
 //echo 'Action is: '.$action;
 //echo '<br />';
-echo '<br /> URL ';
-var_dump($url);
-echo '<br /> Controller ';
-var_dump($controller);
-echo '<br /> Method ';
-var_dump($method);
+//echo '<br /> URL ';
+//var_dump($url);
+//echo '<br /> Controller ';
+//var_dump($controller);
+//echo '<br /> Method ';
+//var_dump($method);
 echo '<br /> Params ';
 var_dump($params);
 
