@@ -16,7 +16,7 @@
         <div class="blog-post">
             <h4 class="blog-post-title">Comments:</h4>
 
-            <?php foreach ($post->ownComments as $comment) {
+            <?php foreach ($post->with("ORDER BY date")->ownComments as $comment) {
                 if($comment->users_id === null) { ?>
                     <p class="blog-post-meta"> <?=$comment->name?></p>
                 <?php } else { ?>
