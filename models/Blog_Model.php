@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Tosil
- * Date: 3.5.2015 г.
- * Time: 17:05 ч.
- */
 
 class Blog_Model {
 
@@ -37,5 +31,40 @@ class Blog_Model {
         if ($filter === 'user') {
 
         }
+    }
+
+    public function get_tags() {
+        $result = R::findAll('tags', ' ORDER BY name' );
+        return $result;
+    }
+
+    public function new_post($title, $text, $tags){
+
+        $post = R::dispense('posts');
+        $post->title = $title;
+        $post->text = $text;
+
+        $post->users_id = $_SESSION['userId'];
+
+        if ($tags !== null) {
+            $tags = explode(',', $tags);
+
+            $post->sharedTagsList = array();
+            foreach ($tags as $tagname){
+                $tagname = mb_strtolower($tagname);
+
+                $tag = R::findOne('tags', 'name = ?', [$tagname ] );
+                if ($tag === null) {
+                    $tag = R::dispense('tags');
+                    $tag->name = $tagname;
+                }
+
+                $post->sharedTagsList[] = $tag;
+            }
+        }
+
+        R::store($post);
+        return $post->id;
+
     }
 }

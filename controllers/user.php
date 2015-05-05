@@ -14,7 +14,7 @@ class User_Controller {
             try {
                 $login_model->login($username, $password);
 
-                header("Location: ".SITE_ROOT_URL."master/index");
+                header("Location: ".SITE_ROOT_URL."blog/index");
                 die();
             }
             catch (InvalidLoginUsernameException $ex){
@@ -32,7 +32,7 @@ class User_Controller {
         $login_model = new Login_Model();
         $login_model->logout();
 
-        header("Location: ".SITE_ROOT_URL."master/index");
+        header("Location: ".SITE_ROOT_URL."blog/index");
         die();
 
     }

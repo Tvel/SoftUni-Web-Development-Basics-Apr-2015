@@ -6,8 +6,8 @@ define( 'SITE_ROOT_URL', 'http://' . $_SERVER['HTTP_HOST'] .'/' );//. basename( 
 session_cache_limiter('none');
 session_start();
 require_once('system/config.php');
-require_once('controllers/Master.php');
-$controller = 'Master';
+require_once('controllers/blog.php');
+$controller = 'Blog';
 $method = 'index';
 $params = array();
 $url = null;

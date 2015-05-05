@@ -16,6 +16,7 @@
 
     <link href="<?=SITE_ROOT_URL?>css/bootstrap.css" rel="stylesheet">
     <link href="<?=SITE_ROOT_URL?>css/blog.css" rel="stylesheet">
+    <link href="<?=SITE_ROOT_URL?>css/bootstrap-tagsinput.css" rel="stylesheet">
 
 </head>
 <body>
@@ -23,9 +24,9 @@
     <div class="blog-masthead">
         <div class="container">
             <nav class="blog-nav">
-                <a class="blog-nav-item active" href="<?=SITE_ROOT_URL?>master/index/">Home</a>
+                <a class="blog-nav-item active" href="<?=SITE_ROOT_URL?>blog/index/">Home</a>
                 <?php if (isset($_SESSION['userId'] ) ){ ?>
-                <a class="blog-nav-item" href="<?=SITE_ROOT_URL?>master/newpost">New post</a>
+                <a class="blog-nav-item" href="<?=SITE_ROOT_URL?>blog/newpost">New post</a>
                 <?php } ?>
 
                 <?php if (isset($_SESSION['userId'] ) ){ ?>
