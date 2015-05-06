@@ -2,7 +2,7 @@
 define( 'SITE_DS', DIRECTORY_SEPARATOR );
 define( 'SITE_ROOT_DIR', dirname( __FILE__ ) . SITE_DS );
 define( 'SITE_ROOT_PATH', basename( dirname( __FILE__ ) ) . SITE_DS );
-define( 'SITE_ROOT_URL', 'http://' . $_SERVER['HTTP_HOST'] .'/' );//. basename( dirname( __FILE__ ) ).'/' );
+define( 'SITE_ROOT_URL', 'http://' . $_SERVER['HTTP_HOST'] .'/' . basename( dirname( __FILE__ ) ).'/' );
 session_cache_limiter('none');
 session_start();
 require_once('system/config.php');
@@ -56,6 +56,12 @@ try {
         call_user_func_array( array( $instance, 'index' ), array( 'Wrong controller '.$controller ) );
     }
 }
+catch ( NotAuthenticatedException  $ex) {
+    include_once 'controllers/Error.php';
+    $controller_class =  ucfirst( 'error' ) . '_Controller';
+    $instance = new $controller_class();
+    call_user_func_array( array( $instance, 'index' ), array( $ex->getMessage()."</br>Please contact the administrator if this is a problem." ) );
+}
 catch ( Exception  $ex) {
     include_once 'controllers/Error.php';
     $controller_class =  ucfirst( 'error' ) . '_Controller';
@@ -63,34 +69,23 @@ catch ( Exception  $ex) {
     call_user_func_array( array( $instance, 'index' ), array( $ex->getMessage() ) );
 }
 
-
-//ob_start();
-
-
-
-//echo ob_get_clean();
-
-
-
-
-
-echo '<br /> URL ';
-var_dump($url);
-echo '<br /> Controller ';
-var_dump($controller);
-echo '<br /> Method ';
-var_dump($method);
-echo '<br /> Params ';
-var_dump($params);
+//echo '<br /> URL ';
+//var_dump($url);
+//echo '<br /> Controller ';
+//var_dump($controller);
+//echo '<br /> Method ';
+//var_dump($method);
+//echo '<br /> Params ';
+//var_dump($params);
 
 //var_dump($_GET);
-echo '<br />';
-echo 'SITE_DS : '.SITE_DS;
-echo '<br />';
-echo 'SITE_ROOT_DIR : '.SITE_ROOT_DIR;
-echo '<br />';
-echo 'SITE_ROOT_PATH : '.SITE_ROOT_PATH;
-echo '<br />';
-echo 'SITE_ROOT_URL : '.SITE_ROOT_URL;
+//echo '<br />';
+//echo 'SITE_DS : '.SITE_DS;
+//echo '<br />';
+//echo 'SITE_ROOT_DIR : '.SITE_ROOT_DIR;
+//echo '<br />';
+//echo 'SITE_ROOT_PATH : '.SITE_ROOT_PATH;
+//echo '<br />';
+//echo 'SITE_ROOT_URL : '.SITE_ROOT_URL;
 ?>
 

@@ -55,6 +55,7 @@ class Blog_Model {
         $post = R::dispense('posts');
         $post->title = $title;
         $post->text = $text;
+        $post->date = new DateTime("NOW");
 
         $post->users_id = $_SESSION['userId'];
 

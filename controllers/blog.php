@@ -3,12 +3,7 @@
 
 class Blog_Controller {
 
-
     public function index(){
-
-        //$test_model = new Test_Model();
-        //$result = $test_model->get_test();
-
         $page = intval( Parameters::get(0) );
         if ($page < 1){
             $page = 1;
@@ -26,7 +21,6 @@ class Blog_Controller {
         $template->set('months', $months);
         $template->set('tags', $tags);
 
-
         $limit = $number * $page;
         if ($limit >= $blog_model->num_posts()) {
             $template->set('next_page', null);
@@ -41,6 +35,9 @@ class Blog_Controller {
     }
 
     public function newpost(){
+        if(!Auth_Check::Poster()){
+            throw new NotAuthenticatedException("You don't have the rights to make new posts");
+        }
 
         $template = new Template('master/newpost.php');
         $template->set('title', 'New Post');
@@ -66,14 +63,11 @@ class Blog_Controller {
 
         }
 
-
         $template->render();
     }
 
     public function post(){
-
         $page_id = Parameters::get(0);
-
 
         $template = new Template('master/post.php');
         $blog_model = new Blog_Model();

@@ -25,15 +25,16 @@
         <div class="container">
             <nav class="blog-nav">
                 <a class="blog-nav-item active" href="<?=SITE_ROOT_URL?>blog/index/">Home</a>
-                <?php if (isset($_SESSION['userId'] ) ){ ?>
+                <?php if (Auth_Check::Poster()) { ?>
                 <a class="blog-nav-item" href="<?=SITE_ROOT_URL?>blog/newpost">New post</a>
                 <?php } ?>
 
-                <?php if (isset($_SESSION['userId'] ) ){ ?>
+                <?php if (Auth_Check::Regular() ){ ?>
                     <a class="blog-nav-item pull-right" href="<?=SITE_ROOT_URL?>user/logout">Logout</a>
                     <a class="blog-nav-item pull-right">Hello, <?=$_SESSION['userUsername']?></a>
                 <?php } else { ?>
                 <a class="blog-nav-item pull-right" href="<?=SITE_ROOT_URL?>user/login">Login</a>
+                    <a class="blog-nav-item pull-right" href="<?=SITE_ROOT_URL?>user/register">Register</a>
                 <?php } ?>
             </nav>
         </div>
