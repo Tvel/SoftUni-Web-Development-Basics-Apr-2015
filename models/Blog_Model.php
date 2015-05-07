@@ -11,9 +11,9 @@ class Blog_Model {
      * @throws Exception
      * @throws InvalidIdException
      */
-    public function get_posts($page, $number, $filter = null, $filterValue = null)
+    public function GetPosts($page, $number, $filter = null, $filterValue = null)
     {
-        $numOfPosts = $this->num_posts();
+        $numOfPosts = $this->NumPosts();
 
         // $number per page
         $limit = $number * $page;
@@ -53,7 +53,7 @@ class Blog_Model {
 
     }
 
-    public function num_posts($filter = null, $filterValue = null){
+    public function NumPosts($filter = null, $filterValue = null){
         switch($filter) {
             case null:
                 return R::count( 'posts' );
@@ -76,7 +76,7 @@ class Blog_Model {
         }
     }
 
-    public function get_post($id){
+    public function GetPost($id){
         $post = R::findOne('posts', 'id = ?', [$id]);
         if ($post === null) {
             throw new InvalidIdException("This page does not exist");
@@ -89,7 +89,7 @@ class Blog_Model {
         return $post;
     }
 
-    public function get_months($filter = null, $data = null){
+    public function GetMonths($filter = null, $data = null){
 
         if ($filter == null) {
            return R::getAll( 'SELECT distinct monthname(date) as month, year(date) as year FROM posts order by year(date) desc');
@@ -97,12 +97,12 @@ class Blog_Model {
 
     }
 
-    public function get_tags() {
+    public function GetTags() {
         $result = R::findAll('tags', ' ORDER BY name' );
         return $result;
     }
 
-    public function new_post($title, $text, $tags){
+    public function NewPost($title, $text, $tags){
         $post = R::dispense('posts');
         $post->title = $title;
         $post->text = $text;
@@ -111,13 +111,13 @@ class Blog_Model {
 
         $post->users_id = $_SESSION['userId'];
 
-        $this->add_tags_post($post,$tags);
+        $this->AddTagsToPost($post,$tags);
 
         R::store($post);
         return $post->id;
     }
 
-    public function new_comment($post, $text, $name = null, $email = null){
+    public function NewComment($post, $text, $name = null, $email = null){
 
         $comment = R::dispense('comments');
         $comment->text = $text;
@@ -135,7 +135,7 @@ class Blog_Model {
         R::store($post);
     }
 
-    public function add_tags_post($post, $tags) {
+    public function AddTagsToPost($post, $tags) {
         if ($tags !== null) {
             $tags = explode(',', $tags);
 

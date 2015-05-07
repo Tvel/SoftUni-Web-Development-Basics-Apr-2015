@@ -10,10 +10,10 @@ class Blog_Controller {
         }
         $number = 5; //5 items per page
         $blog_model = new Blog_Model();
-        $result = $blog_model->get_posts($page, $number);
+        $result = $blog_model->GetPosts($page, $number);
 
-        $months = $blog_model->get_months();
-        $tags = $blog_model->get_tags();
+        $months = $blog_model->GetMonths();
+        $tags = $blog_model->GetTags();
 
         $template = new Template('master/index.php');
        // $template->set('put', 'putted');
@@ -22,7 +22,7 @@ class Blog_Controller {
         $template->set('tags', $tags);
 
         $limit = $number * $page;
-        if ($limit >= $blog_model->num_posts()) {
+        if ($limit >= $blog_model->NumPosts()) {
             $template->set('next_page', null);
         }
         else{
@@ -52,7 +52,7 @@ class Blog_Controller {
 
             $blog_model = new Blog_Model();
             try {
-                $id = $blog_model->new_post($title, $text, $tags);
+                $id = $blog_model->NewPost($title, $text, $tags);
 
                 header("Location: ".SITE_ROOT_URL."blog/post/".$id);
                 die();
@@ -71,9 +71,9 @@ class Blog_Controller {
 
         $template = new Template('master/post.php');
         $blog_model = new Blog_Model();
-        $post = $blog_model->get_post($page_id);
-        $months = $blog_model->get_months();
-        $tags = $blog_model->get_tags();
+        $post = $blog_model->GetPost($page_id);
+        $months = $blog_model->GetMonths();
+        $tags = $blog_model->GetTags();
         $template->set('months', $months);
         $template->set('tags', $tags);
         $template->set('post', $post);
@@ -86,7 +86,7 @@ class Blog_Controller {
             if (isset($_POST['comment_name'])  ) $name = $_POST['comment_name'];
             if (isset($_POST['comment_email'])  )  $email = $_POST['comment_email'];
 
-            $blog_model->new_comment($post, $text, $name, $email);
+            $blog_model->NewComment($post, $text, $name, $email);
         }
 
         $template->render();
@@ -100,10 +100,10 @@ class Blog_Controller {
         }
         $number = 5; //5 items per page
         $blog_model = new Blog_Model();
-        $result = $blog_model->get_posts($page, $number, 'tags', $tagId);
+        $result = $blog_model->GetPosts($page, $number, 'tags', $tagId);
 
-        $months = $blog_model->get_months();
-        $tags = $blog_model->get_tags();
+        $months = $blog_model->GetMonths();
+        $tags = $blog_model->GetTags();
 
         $template = new Template('master/index.php');
         // $template->set('put', 'putted');
@@ -113,7 +113,7 @@ class Blog_Controller {
         $template->set('tag_id', $tagId);
 
         $limit = $number * $page;
-        if ($limit >= $blog_model->num_posts('tags', $tagId)) {
+        if ($limit >= $blog_model->NumPosts('tags', $tagId)) {
             $template->set('next_page', null);
         }
         else{
@@ -135,10 +135,10 @@ class Blog_Controller {
         }
         $number = 5; //5 items per page
         $blog_model = new Blog_Model();
-        $result = $blog_model->get_posts($page, $number, 'date', $filters);
+        $result = $blog_model->GetPosts($page, $number, 'date', $filters);
 
-        $months = $blog_model->get_months();
-        $tags = $blog_model->get_tags();
+        $months = $blog_model->GetMonths();
+        $tags = $blog_model->GetTags();
 
         $template = new Template('master/index.php');
         // $template->set('put', 'putted');
@@ -149,7 +149,7 @@ class Blog_Controller {
         $template->set('month', $filters['month']);
 
         $limit = $number * $page;
-        if ($limit >= $blog_model->num_posts('date', $filters)) {
+        if ($limit >= $blog_model->NumPosts('date', $filters)) {
             $template->set('next_page', null);
         }
         else{

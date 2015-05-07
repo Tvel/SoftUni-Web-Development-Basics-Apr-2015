@@ -2,7 +2,7 @@
 
 class Login_Model {
 
-    public function login($username, $password){
+    public function Login($username, $password){
         $user = R::findOne('users', 'username = ?' , [ $username ]);
         if (!isset($user)) {
             throw new InvalidLoginUsernameException("Invalid username");
@@ -17,14 +17,14 @@ class Login_Model {
         $_SESSION['userRole'] = $user->role->name;
     }
 
-    public function logout(){
+    public function Logout(){
 
         unset($_SESSION['userId']);
         unset($_SESSION['userUsername']);
         unset($_SESSION['userEmail']);
     }
 
-    public function register($username, $password, $email) {
+    public function Register($username, $password, $email) {
 
         $user = R::findOne('users', 'username = ?' , [ $username ]);
         if (isset($user)) {
@@ -43,6 +43,6 @@ class Login_Model {
 
         R::store($user);
 
-        $this->login($user->username, $user->password);
+        $this->Login($user->username, $user->password);
     }
 }

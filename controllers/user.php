@@ -12,7 +12,7 @@ class User_Controller {
 
             $login_model = new Login_Model();
             try {
-                $login_model->login($username, $password);
+                $login_model->Login($username, $password);
 
                 header("Location: ".SITE_ROOT_URL."blog/index");
                 die();
@@ -30,7 +30,7 @@ class User_Controller {
 
     public function logout () {
         $login_model = new Login_Model();
-        $login_model->logout();
+        $login_model->Logout();
 
         header("Location: ".SITE_ROOT_URL."blog/index");
         die();
@@ -68,7 +68,7 @@ class User_Controller {
                 }
 
                 $login_model = new Login_Model();
-                $login_model->register($username,$password, $email);
+                $login_model->Register($username,$password, $email);
 
                 header("Location: ".SITE_ROOT_URL."blog/index");
                 die();
