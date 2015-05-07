@@ -43,11 +43,11 @@ class Blog_Controller {
         $template->set('title', 'New Post');
 
         if (isset($_POST['title']) && isset($_POST['text']) ) {
-            $title = $_POST['title'];
-            $text = $_POST['text'];
+            $title = Helper::SanatizeString( $_POST['title']);
+            $text = Helper::SanatizeString($_POST['text']);
             $tags = null;
             if (isset($_POST['tags'])) {
-                $tags = $_POST['tags'];
+                $tags = Helper::SanatizeString($_POST['tags']);
             }
 
             $blog_model = new Blog_Model();

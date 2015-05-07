@@ -7,8 +7,8 @@ class User_Controller {
         $template = new Template('user/login.php');
 
         if (isset($_POST['username']) && isset($_POST['password']) ) {
-            $username = $_POST['username'];
-            $password = $_POST['password'];
+            $username = Helper::SanatizeString($_POST['username']);
+            $password = Helper::SanatizeString($_POST['password']);
 
             $login_model = new Login_Model();
             try {
@@ -59,10 +59,10 @@ class User_Controller {
                 if (!isset($_POST['email'])) {
                     throw new InvalidRegisterException("Email cannot be empty");
                 }
-                $username = $_POST['username'];
-                $password = $_POST['password'];
-                $confirm_password = $_POST['confirm_password'];
-                $email = $_POST['email'];
+                $username = Helper::SanatizeString($_POST['username']);
+                $password = Helper::SanatizeString($_POST['password']);
+                $confirm_password = Helper::SanatizeString($_POST['confirm_password']);
+                $email = Helper::SanatizeString($_POST['email']);
                 if ($password !== $confirm_password) {
                     throw new InvalidRegisterException("Password and confirm does not match");
                 }
@@ -72,7 +72,6 @@ class User_Controller {
 
                 header("Location: ".SITE_ROOT_URL."blog/index");
                 die();
-
             }
             catch(InvalidRegisterException $ex) {
                 $template->set('error', $ex->getMessage());

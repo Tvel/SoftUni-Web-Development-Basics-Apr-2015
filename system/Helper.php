@@ -18,4 +18,9 @@ class Helper {
             case 'december' :   return 12;
         }
     }
+
+    public static function SanatizeString($string){
+        $value = filter_var($string, FILTER_SANITIZE_STRING);
+        return $value;
+    }
 }

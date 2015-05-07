@@ -23,7 +23,7 @@ class Parameters {
         if (!isset(self::$params[$num])){
             return null;
         }
-        return self::$params[$num];
+        return Helper::SanatizeString(self::$params[$num]);
     }
 
     public static function get_controller() {
