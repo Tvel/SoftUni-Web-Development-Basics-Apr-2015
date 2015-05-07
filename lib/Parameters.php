@@ -11,6 +11,7 @@ class Parameters {
     public static $params;
     public static $controller;
     public static $method;
+    public static $is_admin;
 
     public function __construct($params) {
 
@@ -19,6 +20,9 @@ class Parameters {
 
     public static function get($num) {
 
+        if (!isset(self::$params[$num])){
+            return null;
+        }
         return self::$params[$num];
     }
 
@@ -40,6 +44,16 @@ class Parameters {
     public static function set_method($method) {
 
         self::$method = $method;
+    }
+
+    public static function set_admin($admin) {
+
+        self::$is_admin = $admin;
+    }
+
+    public static function get_admin() {
+
+        return self::$is_admin;
     }
 
 

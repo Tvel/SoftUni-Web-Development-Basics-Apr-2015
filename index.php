@@ -12,6 +12,7 @@ $method = 'index';
 $params = array();
 $url = null;
 $controller_path = "";
+Parameters::set_admin(false);
 
 if ( ! empty( $_GET['url'] ) ) {
     //$action = $_GET['url'];
@@ -20,6 +21,7 @@ if ( ! empty( $_GET['url'] ) ) {
 
     $offset = 0;
     if ($url[0] === 'admin') {
+        Parameters::set_admin(true);
         $offset = 1;
         $controller_path = "admin/";
     }

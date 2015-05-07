@@ -2,7 +2,16 @@
 
 class Blog_Model {
 
-    public function get_posts($page, $number)
+    /**
+     * @param $page page number
+     * @param $number number of page results
+     * @param null $filter must be null, tags, date
+     * @param null $filterValue if filter == tags then this is a tag id. If filter == date - this is an array with month and year
+     * @return array|mixed returns posts array bean
+     * @throws Exception
+     * @throws InvalidIdException
+     */
+    public function get_posts($page, $number, $filter = null, $filterValue = null)
     {
         $numOfPosts = $this->num_posts();
 
@@ -14,13 +23,57 @@ class Blog_Model {
             //die("Invalid page");
         }
 
-        $result = R::findAll('posts', ' ORDER BY date DESC LIMIT :start,:end ',
-            [ ':start' => $start, ':end' => $limit  ]);
-        return $result;
+        switch($filter) {
+            case null:
+                $result = R::findAll('posts', ' ORDER BY date DESC LIMIT :start,:end ',
+                    [ ':start' => $start, ':end' => $limit  ]);
+                return $result;
+            case 'tags':
+                $tagId = $filterValue;
+                $tag = R::findOne('tags', 'id= ?', [ $tagId]);
+                if ($tag == null) {
+                    throw new InvalidIdException('Tag does not exist');
+                }
+                $result = $tag->with( ' ORDER BY date DESC LIMIT :start,:end ',
+                    [ ':start' => $start, ':end' => $limit  ])->sharedPosts;
+                return $result;
+            case 'date':
+                $result = R::find('posts', 'MONTH(`date`) = :month AND YEAR(`date`) = :year ORDER BY date DESC LIMIT :start,:end ',
+                    [
+                        ':start' => $start,
+                        ':end' => $limit ,
+                        ':month' => Helper::MonthStringToNumber($filterValue['month']) ,
+                        ':year' => $filterValue['year']
+                    ]);
+                return $result;
+
+        }
+
+
+
     }
 
-    public function num_posts(){
-        return R::count( 'posts' );
+    public function num_posts($filter = null, $filterValue = null){
+        switch($filter) {
+            case null:
+                return R::count( 'posts' );
+            case 'tags':
+                $tagId = $filterValue;
+                $tag = R::findOne('tags', 'id= ?', [$tagId]);
+                if ($tag == null) {
+                    throw new InvalidIdException('Tag does not exist');
+                }
+                $result = $tag->countShared('posts');
+                return $result;
+            case 'date':
+                $result = R::count('posts', 'MONTH(`date`) = :month AND YEAR(`date`) = :year',
+                    [
+                        ':month' => Helper::MonthStringToNumber($filterValue['month']) ,
+                        ':year' => $filterValue['year']
+                    ]);
+                return $result;
+
+        }
     }
 
     public function get_post($id){
@@ -37,12 +90,6 @@ class Blog_Model {
            return R::getAll( 'SELECT distinct monthname(date) as month, year(date) as year FROM posts order by year(date) desc');
         }
 
-        if ($filter === 'tags') {
-
-        }
-        if ($filter === 'user') {
-
-        }
     }
 
     public function get_tags() {
@@ -51,7 +98,6 @@ class Blog_Model {
     }
 
     public function new_post($title, $text, $tags){
-
         $post = R::dispense('posts');
         $post->title = $title;
         $post->text = $text;
@@ -59,22 +105,7 @@ class Blog_Model {
 
         $post->users_id = $_SESSION['userId'];
 
-        if ($tags !== null) {
-            $tags = explode(',', $tags);
-
-            $post->sharedTagsList = array();
-            foreach ($tags as $tagname){
-                $tagname = mb_strtolower($tagname);
-
-                $tag = R::findOne('tags', 'name = ?', [$tagname ] );
-                if ($tag === null) {
-                    $tag = R::dispense('tags');
-                    $tag->name = $tagname;
-                }
-
-                $post->sharedTagsList[] = $tag;
-            }
-        }
+        $this->add_tags_post($post,$tags);
 
         R::store($post);
         return $post->id;
@@ -95,6 +126,30 @@ class Blog_Model {
         }
 
         $post->ownCommentsList[] = $comment;
+        R::store($post);
+    }
+
+    public function add_tags_post($post, $tags) {
+        if ($tags !== null) {
+            $tags = explode(',', $tags);
+
+            $post->sharedTagsList = array();
+            foreach ($tags as $key =>$tagname) {
+                $tags[$key] = trim(mb_strtolower($tagname));
+            }
+            $tags = array_unique($tags);
+            foreach ($tags as $tagname) {
+
+                $tag = R::findOne('tags', 'name = ?', [$tagname ] );
+                if ($tag === null) {
+                    $tag = R::dispense('tags');
+                    $tag->name = $tagname;
+                }
+
+                $post->sharedTagsList[] = $tag;
+            }
+        }
+
         R::store($post);
     }
 }

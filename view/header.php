@@ -31,7 +31,7 @@
 
                 <?php if (Auth_Check::Regular() ){ ?>
                     <a class="blog-nav-item pull-right" href="<?=SITE_ROOT_URL?>user/logout">Logout</a>
-                    <a class="blog-nav-item pull-right ">Hello, <?=$_SESSION['userUsername']?></a>
+                    <a class="blog-nav-item pull-right <?php if (Page_Check::Login()) echo 'active'; ?>">Hello, <?=$_SESSION['userUsername']?></a>
                 <?php } else { ?>
                 <a class="blog-nav-item pull-right <?php if (Page_Check::Login()) echo 'active'; ?>" href="<?=SITE_ROOT_URL?>user/login">Login</a>
                     <a class="blog-nav-item pull-right <?php if (Page_Check::Register()) echo 'active'; ?>" href="<?=SITE_ROOT_URL?>user/register">Register</a>

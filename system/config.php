@@ -19,4 +19,5 @@ include_once( SITE_ROOT_DIR.'lib'.SITE_DS.'rb-3.5.13.php');
 include_once( SITE_ROOT_DIR.'system'.SITE_DS.'Exceptions.php');
 include_once( SITE_ROOT_DIR.'system'.SITE_DS.'Auth_Check.php');
 include_once( SITE_ROOT_DIR.'system'.SITE_DS.'Page_Check.php');
+include_once( SITE_ROOT_DIR.'system'.SITE_DS.'Helper.php');
 new Database_RB();

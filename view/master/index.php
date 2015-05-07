@@ -25,12 +25,28 @@
     <div class="col-md-12">
         <div class="col-md-6">
             <?php if ($prev_page !== null) : ?>
-                <a class="pull-right" href="<?=SITE_ROOT_URL?>blog/index/<?=$prev_page?>"><- Newer posts</a>
+                <?php if (Page_Check::Home()) : ?>
+                    <a class="pull-right" href="<?=SITE_ROOT_URL?>blog/index/<?=$prev_page?>"><- Newer posts</a>
+                <?php endif; ?>
+                <?php if (Page_Check::TagPosts()) : ?>
+                    <a class="pull-right" href="<?=SITE_ROOT_URL?>blog/tag/<?=$tag_id?>/<?=$prev_page?>"><- Newer posts</a>
+                <?php endif; ?>
+                <?php if (Page_Check::DatePosts()) : ?>
+                    <a class="pull-right" href="<?=SITE_ROOT_URL?>blog/date/<?=$year?>/<?=$month?>/<?=$prev_page?>"><- Newer posts</a>
+                <?php endif; ?>
             <?php endif; ?>
         </div>
         <div class="col-md-6">
             <?php if ($next_page !== null) : ?>
-                <a class="pull-left" href="<?=SITE_ROOT_URL?>blog/index/<?=$next_page?>">Older posts -></a>
+                <?php if (Page_Check::Home()) : ?>
+                    <a class="pull-left" href="<?=SITE_ROOT_URL?>blog/index/<?=$next_page?>">Older posts -></a>
+                <?php endif; ?>
+                <?php if (Page_Check::TagPosts()) : ?>
+                    <a class="pull-left" href="<?=SITE_ROOT_URL?>blog/tag/<?=$tag_id?>/<?=$next_page?>">Older posts -></a>
+                <?php endif; ?>
+                <?php if (Page_Check::DatePosts()) : ?>
+                    <a class="pull-left" href="<?=SITE_ROOT_URL?>blog/date/<?=$year?>/<?=$month?>/<?=$next_page?>">Older posts -></a>
+                <?php endif; ?>
             <?php endif; ?>
         </div>
     </div>

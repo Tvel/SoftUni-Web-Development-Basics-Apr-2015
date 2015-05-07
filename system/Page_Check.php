@@ -2,32 +2,39 @@
 
 class Page_Check {
 
-    public static function Home(){
-        if (Parameters::get_controller() === 'blog' && Parameters::get_method() === 'index') {
+    private static function _Checker($controller, $method){
+        if (Parameters::get_controller() === $controller && Parameters::get_method() === $method) {
             return true;
         }
         return false;
+    }
+
+    public static function Home(){
+        return self::_Checker('blog','index');
+    }
+
+    public static function TagPosts(){
+        return self::_Checker('blog','tag');
+    }
+
+    public static function DatePosts(){
+        return self::_Checker('blog','date');
     }
 
     public static function NewPost(){
-        if (Parameters::get_controller() === 'blog' && Parameters::get_method() === 'newpost') {
-            return true;
-        }
-        return false;
+        return self::_Checker('blog','newpost');
+    }
+
+    public static function UserProfile(){
+        return self::_Checker('user','profile');
     }
 
     public static function Login(){
-        if (Parameters::get_controller() === 'user' && Parameters::get_method() === 'login') {
-            return true;
-        }
-        return false;
+        return self::_Checker('user','login');
     }
 
     public static function Register(){
-        if (Parameters::get_controller() === 'user' && Parameters::get_method() === 'register') {
-            return true;
-        }
-        return false;
+        return self::_Checker('blog','register');
     }
 
 }
