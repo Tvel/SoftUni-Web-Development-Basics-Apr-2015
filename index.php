@@ -7,7 +7,7 @@ session_cache_limiter('none');
 session_start();
 require_once('system/config.php');
 require_once('controllers/blog.php');
-$controller = 'Blog';
+$controller = 'blog';
 $method = 'index';
 $params = array();
 $url = null;
@@ -35,6 +35,9 @@ if ( ! empty( $_GET['url'] ) ) {
         }
     }
  }
+
+Parameters::set_controller($controller);
+Parameters::set_method($method);
 
 try {
     if ( isset( $controller ) && file_exists( 'controllers/' . $controller_path . $controller . '.php' ) ) {

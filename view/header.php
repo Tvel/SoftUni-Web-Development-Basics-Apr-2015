@@ -24,17 +24,17 @@
     <div class="blog-masthead">
         <div class="container">
             <nav class="blog-nav">
-                <a class="blog-nav-item active" href="<?=SITE_ROOT_URL?>blog/index/">Home</a>
+                <a class="blog-nav-item <?php if (Page_Check::Home()) echo 'active'; ?>" href="<?=SITE_ROOT_URL?>blog/index/">Home</a>
                 <?php if (Auth_Check::Poster()) { ?>
-                <a class="blog-nav-item" href="<?=SITE_ROOT_URL?>blog/newpost">New post</a>
+                <a class="blog-nav-item  <?php if (Page_Check::NewPost()) echo 'active'; ?>" href="<?=SITE_ROOT_URL?>blog/newpost">New post</a>
                 <?php } ?>
 
                 <?php if (Auth_Check::Regular() ){ ?>
                     <a class="blog-nav-item pull-right" href="<?=SITE_ROOT_URL?>user/logout">Logout</a>
-                    <a class="blog-nav-item pull-right">Hello, <?=$_SESSION['userUsername']?></a>
+                    <a class="blog-nav-item pull-right ">Hello, <?=$_SESSION['userUsername']?></a>
                 <?php } else { ?>
-                <a class="blog-nav-item pull-right" href="<?=SITE_ROOT_URL?>user/login">Login</a>
-                    <a class="blog-nav-item pull-right" href="<?=SITE_ROOT_URL?>user/register">Register</a>
+                <a class="blog-nav-item pull-right <?php if (Page_Check::Login()) echo 'active'; ?>" href="<?=SITE_ROOT_URL?>user/login">Login</a>
+                    <a class="blog-nav-item pull-right <?php if (Page_Check::Register()) echo 'active'; ?>" href="<?=SITE_ROOT_URL?>user/register">Register</a>
                 <?php } ?>
             </nav>
         </div>
