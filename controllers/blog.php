@@ -44,7 +44,7 @@ class Blog_Controller {
 
         if (isset($_POST['title']) && isset($_POST['text']) ) {
             $title = Helper::SanatizeString( $_POST['title']);
-            $text = Helper::SanatizeString($_POST['text']);
+            $text = $_POST['text'];
             $tags = null;
             if (isset($_POST['tags'])) {
                 $tags = Helper::SanatizeString($_POST['tags']);

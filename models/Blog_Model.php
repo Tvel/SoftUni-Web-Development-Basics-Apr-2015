@@ -81,6 +81,11 @@ class Blog_Model {
         if ($post === null) {
             throw new InvalidIdException("This page does not exist");
         }
+        $post->visits = $post->visits +1;
+        foreach ($post->sharedTags as $tag) {
+            $tag->visits = $tag->visits +1;
+        }
+        R::store($post);
         return $post;
     }
 
@@ -102,6 +107,7 @@ class Blog_Model {
         $post->title = $title;
         $post->text = $text;
         $post->date = new DateTime("NOW");
+        $post->visits = 0;
 
         $post->users_id = $_SESSION['userId'];
 
@@ -144,6 +150,7 @@ class Blog_Model {
                 if ($tag === null) {
                     $tag = R::dispense('tags');
                     $tag->name = $tagname;
+                    $tag->visits = 0;
                 }
 
                 $post->sharedTagsList[] = $tag;
