@@ -25,13 +25,16 @@
         <div class="container">
             <nav class="blog-nav">
                 <a class="blog-nav-item <?php if (Page_Check::Home()) echo 'active'; ?>" href="<?=SITE_ROOT_URL?>blog/index/">Home</a>
+                <?php if (Auth_Check::Regular()) { ?>
+                    <a class="blog-nav-item  <?php if (Page_Check::MyProfile()) echo 'active'; ?>" href="<?=SITE_ROOT_URL?>user/myprofile">My profile</a>
+                <?php } ?>
                 <?php if (Auth_Check::Poster()) { ?>
                 <a class="blog-nav-item  <?php if (Page_Check::NewPost()) echo 'active'; ?>" href="<?=SITE_ROOT_URL?>blog/newpost">New post</a>
                 <?php } ?>
 
                 <?php if (Auth_Check::Regular() ){ ?>
                     <a class="blog-nav-item pull-right" href="<?=SITE_ROOT_URL?>user/logout">Logout</a>
-                    <a class="blog-nav-item pull-right <?php if (Page_Check::Login()) echo 'active'; ?>">Hello, <?=$_SESSION['userUsername']?></a>
+                    <a class="blog-nav-item pull-right  <?php if (Page_Check::MyProfile()) echo 'active'; ?>" href="<?=SITE_ROOT_URL?>user/myprofile">Hello, <?=$_SESSION['userUsername']?></a>
                 <?php } else { ?>
                 <a class="blog-nav-item pull-right <?php if (Page_Check::Login()) echo 'active'; ?>" href="<?=SITE_ROOT_URL?>user/login">Login</a>
                     <a class="blog-nav-item pull-right <?php if (Page_Check::Register()) echo 'active'; ?>" href="<?=SITE_ROOT_URL?>user/register">Register</a>

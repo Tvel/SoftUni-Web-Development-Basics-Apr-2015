@@ -60,10 +60,9 @@ class Blog_Model {
                     $returned = array_slice( $results, $start, $number);
                     return $returned;
                 }
-
+            default :
+                throw new InvalidIdException("Unknown filter");
         }
-
-
 
     }
 

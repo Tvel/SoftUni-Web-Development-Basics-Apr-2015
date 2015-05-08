@@ -14,16 +14,38 @@
 
         </div><!-- /.blog-post -->
         <div class="blog-post">
-            <h4 class="blog-post-title">Comments:</h4>
+            <h3>Comments:</h3>
 
             <?php foreach ($post->with("ORDER BY date")->ownComments as $comment) {
-                if($comment->users_id === null) { ?>
-                    <p class="blog-post-meta"> <?=$comment->name?></p>
-                <?php } else { ?>
-                    <p class="blog-post-meta"> <a href="<?=SITE_ROOT_URL?>users/profile/<?=$comment->users->id?>"><?=$comment->users->username?></a></p>
-                <?php } ?>
-                <p><?=$comment->text?></p>
+                $email = '';
+                if($comment->users_id === null) {
+                    $email = $comment->email;
+                }
+                else {
+                    $email = $comment->users->email;
+                }
+                $default =  'http://showdown.gg/wp-content/uploads/2014/05/default-user-300x300.png'; //SITE_ROOT_URL.'img/default-user.png';
+                $size = 64;
+                $grav_url = "http://www.gravatar.com/avatar/" . md5( strtolower( trim( $email ) ) ) . "?d=" . urlencode( $default ) . "&s=" . $size;
+                ?>
+
+            <div class="media">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object" src="<?=$grav_url?>" style="width: 64px; height: 64px;">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <?php  if($comment->users_id === null) { ?>
+                        <h4 class="media-heading"><?=$comment->name?></h4>
+                    <?php } else { ?>
+                        <h4 class="media-heading"><a href="<?=SITE_ROOT_URL?>users/profile/<?=$comment->users->id?>"><?=$comment->users->username?></a></h4>
+                    <?php } ?>
+                    <?=$comment->text?>
+                </div>
+            </div>
             <?php } ?>
+
 
 
         </div>

@@ -33,6 +33,10 @@ class Page_Check {
         return self::_Checker('user','profile');
     }
 
+    public static function MyProfile(){
+        return self::_Checker('user','myprofile');
+    }
+
     public static function Login(){
         return self::_Checker('user','login');
     }
