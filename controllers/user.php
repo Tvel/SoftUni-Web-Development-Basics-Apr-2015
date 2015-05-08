@@ -125,4 +125,28 @@ class User_Controller {
         }
         $template->render();
     }
+
+    public function myposts(){
+        $template = new Template('user/myposts.php');
+        $blog_model = new Blog_Model();
+        if (!Auth_Check::Poster()) {
+            throw new NotAuthenticatedException("You have no rights to view your posts");
+        }
+        $posts = $blog_model->GetUserPosts($_SESSION['userId']);
+
+        $users_posts = array();
+        foreach ($posts as $post) {
+            array_push($users_posts,array(
+                'id' => $post->id,
+                'title' => $post->title,
+                'date' => $post->date,
+                'comments' => $post->countOwn('comments'),
+            ) );
+        }
+        $users_posts = json_encode($users_posts);
+
+        $template->set('posts', $users_posts);
+
+        $template->render();
+    }
 }

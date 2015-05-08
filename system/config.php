@@ -1,7 +1,9 @@
 <?php
 define( 'DB_HOST', 'localhost' );
 define( 'DB_USERNAME', 'root' );
+//define( 'DB_USERNAME', 'evel_softuni' );
 define( 'DB_PASSWORD', '' );
+//define( 'DB_PASSWORD', 'evelsoftuni' );
 define( 'DB_DATABASE', 'evel_softuni' );
 
 function MyAutoload($class){

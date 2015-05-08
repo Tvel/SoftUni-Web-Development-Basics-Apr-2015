@@ -37,6 +37,10 @@ class Page_Check {
         return self::_Checker('user','myprofile');
     }
 
+    public static function MyPosts(){
+        return self::_Checker('user','myposts');
+    }
+
     public static function Login(){
         return self::_Checker('user','login');
     }

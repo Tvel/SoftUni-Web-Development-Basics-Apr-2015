@@ -27,7 +27,7 @@ class Blog_Model {
         switch($filter) {
             case null:
                 $result = R::findAll('posts', ' ORDER BY date DESC LIMIT :start,:end ',
-                    [ ':start' => $start, ':end' => $number  ]);
+                    [ ':start' => $start, ':end' => $number  ] );
                 return $result;
             case 'tags':
                 $tagId = $filterValue;
@@ -105,7 +105,6 @@ class Blog_Model {
                     }
                     return $results;
                 }
-
         }
     }
 
@@ -121,6 +120,14 @@ class Blog_Model {
         R::store($post);
         return $post;
     }
+
+    public function GetUserPosts($userId){
+        $user_model = new User_Model();
+        $user = $user_model->GetUser($userId);
+
+        return $user->with('ORDER BY date')->ownPosts;
+    }
+
 
     public function GetMonths($filter = null, $data = null){
 

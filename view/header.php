@@ -17,7 +17,11 @@
     <link href="<?=SITE_ROOT_URL?>css/bootstrap.css" rel="stylesheet">
     <link href="<?=SITE_ROOT_URL?>css/blog.css" rel="stylesheet">
     <link href="<?=SITE_ROOT_URL?>css/bootstrap-tagsinput.css" rel="stylesheet">
+    <?php if(Page_Check::MyPosts()) : ?>
+        <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.css">
+    <?php endif; ?>
 
+    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
 </head>
 <body>
 
@@ -27,6 +31,9 @@
                 <a class="blog-nav-item <?php if (Page_Check::Home()) echo 'active'; ?>" href="<?=SITE_ROOT_URL?>blog/index/">Home</a>
                 <?php if (Auth_Check::Regular()) { ?>
                     <a class="blog-nav-item  <?php if (Page_Check::MyProfile()) echo 'active'; ?>" href="<?=SITE_ROOT_URL?>user/myprofile">My profile</a>
+                <?php } ?>
+                <?php if (Auth_Check::Poster()) { ?>
+                    <a class="blog-nav-item  <?php if (Page_Check::MyPosts()) echo 'active'; ?>" href="<?=SITE_ROOT_URL?>user/myposts">My Posts</a>
                 <?php } ?>
                 <?php if (Auth_Check::Poster()) { ?>
                 <a class="blog-nav-item  <?php if (Page_Check::NewPost()) echo 'active'; ?>" href="<?=SITE_ROOT_URL?>blog/newpost">New post</a>
@@ -45,13 +52,11 @@
 
     <div class="container">
 
+        <div class="row">
         <div class="blog-header">
             <h1 class="blog-title">TosilV SoftUni exam blog</h1>
             <p class="lead blog-description">TosilV SoftUni exam blog</p>
-    </div>
+        </div>
+        </div>
 
         <div class="row">
-
-
-
-
