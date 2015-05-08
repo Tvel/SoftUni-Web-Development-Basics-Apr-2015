@@ -178,13 +178,13 @@ class Blog_Controller {
 
         $template = new Template('master/index.php');
         // $template->set('put', 'putted');
-        $template->set('posts', $result);
+        $template->set('posts', $result['posts']);
         $template->set('months', $months);
         $template->set('tags', $tags);
         $template->set('filter', $filter);
 
         $limit = $number * $page;
-        if ($limit >= $blog_model->NumPosts('search', $filter)) {
+        if ($limit >= $result['count']) {
             $template->set('next_page', null);
         }
         else{

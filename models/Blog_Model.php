@@ -58,8 +58,12 @@ class Blog_Model {
                         $result = $tag->with(' ORDER BY date DESC ')->sharedPosts;
                         $results = array_merge($results,$result);
                     }
-                    $returned = array_slice( $results, $start, $number);
-                    return $returned;
+                    $results = array_unique($results);
+                    $returned_array = array_slice( $results, $start, $number);
+                    $return = array();
+                    $return['count'] = sizeof($results);
+                    $return['posts'] = $returned_array;
+                    return $return;
                 }
             default :
                 throw new InvalidIdException("Unknown filter");
@@ -96,6 +100,7 @@ class Blog_Model {
                     $results = 0;
                     foreach ($tags as $tag) {
                         $results = $results + $tag->countShared('posts');
+                        // TODO: have to remove duplicates somehow so this is not used as we already get all the results anyway
                     }
                     return $results;
                 }
