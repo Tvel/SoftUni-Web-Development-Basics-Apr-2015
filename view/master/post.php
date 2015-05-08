@@ -28,15 +28,22 @@
 
         </div>
 
-        <div class="blog-post">
+        <div class="blog-post col-md-10 col-md-offset-1">
             <form method="post" >
                 <?php if (!isset($_SESSION['userId'])) : ?>
-                <label for="comment_name">Name</label>
-                <input name="comment_name" id="comment_name" type="text" required />
-                <label for="comment_email">Email</label>
-                <input name="comment_email" id="comment_email" type="email" required />
+                <div class="form-group">
+                    <label for="comment_name">Name</label>
+                    <input class="form-control" name="comment_name" id="comment_name" type="text" required />
+                </div>
+                <div class="form-group">
+                    <label for="comment_email">Email</label>
+                    <input class="form-control" name="comment_email" id="comment_email" type="email" required />
+                </div>
                 <?php endif;?>
-                <textarea name="comment_text" id="comment_text" cols="30" rows="10"></textarea>
+                <div class="form-group">
+                    <label for="comment_text">Comment</label>
+                    <textarea class="form-control" name="comment_text" id="comment_text" cols="30" rows="10"></textarea>
+                </div>
                 <button type="submit">Send</button>
             </form>
         </div>

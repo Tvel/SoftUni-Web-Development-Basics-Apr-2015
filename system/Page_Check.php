@@ -21,6 +21,10 @@ class Page_Check {
         return self::_Checker('blog','date');
     }
 
+    public static function Search(){
+        return self::_Checker('blog','search');
+    }
+
     public static function NewPost(){
         return self::_Checker('blog','newpost');
     }

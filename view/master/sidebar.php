@@ -3,8 +3,15 @@
         <h4>About</h4>
         <p>TosilV SoftUni exam blog</p>
     </div>
+    <div class="sidebar-module form-group">
+        <h4>Search</h4>
+
+        <form action="<?=SITE_ROOT_URL?>blog/search">
+        <input name="filter" class="form-control" type="text"/>
+        </form>
+    </div>
     <div class="sidebar-module">
-        <h4>Tags</h4>
+        <h4>Popular Tags</h4>
         <ol class="list-unstyled">
             <?php
             foreach ($tags as $tag) {

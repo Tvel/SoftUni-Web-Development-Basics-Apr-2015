@@ -160,4 +160,38 @@ class Blog_Controller {
 
         $template->render();
     }
+
+    public function search(){
+        $filter = Helper::SanatizeString($_GET['filter']);
+
+        $page = intval( Parameters::get(0) ); // /blog/search/:page?filter=
+        if ($page < 1){
+            $page = 1;
+        }
+        $number = 5; //5 items per page
+        $blog_model = new Blog_Model();
+        $result = $blog_model->GetPosts($page, $number, 'search', $filter);
+
+        $months = $blog_model->GetMonths();
+        $tags = $blog_model->GetTags();
+
+        $template = new Template('master/index.php');
+        // $template->set('put', 'putted');
+        $template->set('posts', $result);
+        $template->set('months', $months);
+        $template->set('tags', $tags);
+        $template->set('filter', $filter);
+
+        $limit = $number * $page;
+        if ($limit >= $blog_model->NumPosts('search', $filter)) {
+            $template->set('next_page', null);
+        }
+        else{
+            $template->set('next_page', $page+1);
+        }
+        if ($page == 1 ) { $template->set('prev_page',null);}
+        else {$template->set('prev_page', $page-1); }
+
+        $template->render();
+    }
 }

@@ -13,7 +13,7 @@ class Blog_Model {
      */
     public function GetPosts($page, $number, $filter = null, $filterValue = null)
     {
-        $numOfPosts = $this->NumPosts();
+        $numOfPosts = $this->NumPosts($filter, $filterValue);
 
         // $number per page
         $limit = $number * $page;
@@ -26,7 +26,7 @@ class Blog_Model {
         switch($filter) {
             case null:
                 $result = R::findAll('posts', ' ORDER BY date DESC LIMIT :start,:end ',
-                    [ ':start' => $start, ':end' => $limit  ]);
+                    [ ':start' => $start, ':end' => $number  ]);
                 return $result;
             case 'tags':
                 $tagId = $filterValue;
@@ -35,17 +35,31 @@ class Blog_Model {
                     throw new InvalidIdException('Tag does not exist');
                 }
                 $result = $tag->with( ' ORDER BY date DESC LIMIT :start,:end ',
-                    [ ':start' => $start, ':end' => $limit  ])->sharedPosts;
+                    [ ':start' => $start, ':end' => $number  ])->sharedPosts;
                 return $result;
             case 'date':
                 $result = R::find('posts', 'MONTH(`date`) = :month AND YEAR(`date`) = :year ORDER BY date DESC LIMIT :start,:end ',
                     [
                         ':start' => $start,
-                        ':end' => $limit ,
+                        ':end' => $number ,
                         ':month' => Helper::MonthStringToNumber($filterValue['month']) ,
                         ':year' => $filterValue['year']
                     ]);
                 return $result;
+            case 'search':
+                $tags = R::find('tags', 'name LIKE ?', [ '%'.$filterValue.'%' ]);
+                if ($tags == null) {
+                    return null;
+                }
+                else {
+                    $results = array();
+                    foreach ($tags as $tag) {
+                        $result = $tag->with(' ORDER BY date DESC ')->sharedPosts;
+                        $results = array_merge($results,$result);
+                    }
+                    $returned = array_slice( $results, $start, $number);
+                    return $returned;
+                }
 
         }
 
@@ -72,6 +86,19 @@ class Blog_Model {
                         ':year' => $filterValue['year']
                     ]);
                 return $result;
+            case 'search':
+                $tags = R::find('tags', 'name LIKE ?', [ '%'.$filterValue.'%' ]);
+                if ($tags
+                    == null) {
+                    return 0;
+                }
+                else {
+                    $results = 0;
+                    foreach ($tags as $tag) {
+                        $results = $results + $tag->countShared('posts');
+                    }
+                    return $results;
+                }
 
         }
     }

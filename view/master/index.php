@@ -1,6 +1,6 @@
 <div class="col-sm-8 blog-main">
     <?php
-    foreach ($posts as $post) {
+    if ($posts !== null) foreach ($posts as $post) {
     ?>
     <div class="blog-post">
         <h2 class="blog-post-title"><?=$post->title?></h2>
@@ -34,6 +34,9 @@
                 <?php if (Page_Check::DatePosts()) : ?>
                     <a class="pull-right" href="<?=SITE_ROOT_URL?>blog/date/<?=$year?>/<?=$month?>/<?=$prev_page?>"><- Newer posts</a>
                 <?php endif; ?>
+                <?php if (Page_Check::Search()) : ?>
+                    <a class="pull-right" href="<?=SITE_ROOT_URL?>blog/search/<?=$prev_page?>?filter=<?=$filter?>"><- Newer posts</a>
+                <?php endif; ?>
             <?php endif; ?>
         </div>
         <div class="col-md-6">
@@ -46,6 +49,9 @@
                 <?php endif; ?>
                 <?php if (Page_Check::DatePosts()) : ?>
                     <a class="pull-left" href="<?=SITE_ROOT_URL?>blog/date/<?=$year?>/<?=$month?>/<?=$next_page?>">Older posts -></a>
+                <?php endif; ?>
+                <?php if (Page_Check::Search()) : ?>
+                    <a class="pull-left" href="<?=SITE_ROOT_URL?>blog/search/<?=$next_page?>?filter=<?=$filter?>">Older posts -></a>
                 <?php endif; ?>
             <?php endif; ?>
         </div>
