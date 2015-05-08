@@ -60,6 +60,7 @@ class Blog_Model {
                     }
                     $results = array_unique($results);
                     $returned_array = array_slice( $results, $start, $number);
+
                     $return = array();
                     $return['count'] = sizeof($results);
                     $return['posts'] = $returned_array;

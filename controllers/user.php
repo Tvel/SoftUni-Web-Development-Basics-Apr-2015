@@ -86,4 +86,15 @@ class User_Controller {
         $template->render();
     }
 
+    public function myprofile() {
+        $template = new Template('user/myprofile.php');
+
+        $template->set('email', $_SESSION['userEmail']);
+
+
+
+
+
+        $template->render();
+    }
 }
