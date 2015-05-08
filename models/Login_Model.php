@@ -40,6 +40,8 @@ class Login_Model {
         $user->email = $email;
         $user->password = $password;
         $user->role = R::enum('role:regular');
+        $user->about = "";
+        $user->setMeta('cast.about', 'text');
 
         R::store($user);
 

@@ -88,13 +88,41 @@ class User_Controller {
 
     public function myprofile() {
         $template = new Template('user/myprofile.php');
+        $user_model = new User_Model();
 
-        $template->set('email', $_SESSION['userEmail']);
+        $user = $user_model->GetUser($_SESSION['userId']);
+
+        $template->set('email', $user->email);
+        $template->set('about', $user->about);
+
+        if(isset($_POST['email'])) {
+            $email = Helper::SanatizeString($_POST['email']);
+            $about = $_POST['about'];
 
 
+            $user_model->EditInfo($user->id, $email, $about);
+            $template->set('success', "User profile updated");
 
+        }
 
+        if(isset($_POST['old-password'])) {
+            $oldPassword = Helper::SanatizeString($_POST['old-password']);
+            $newPassword = Helper::SanatizeString($_POST['new-password']);
+            $confirmPassword = Helper::SanatizeString($_POST['confirm-password']);
 
+            try {
+                if ($newPassword !== $confirmPassword) {
+                    throw new InvalidFormDataException("Passwords does not match");
+                }
+
+                $user_model->ChangePass($user->id, $oldPassword, $newPassword);
+                $template->set('success', "Password changed");
+            }
+            catch( InvalidFormDataException $ex){
+                $template->set('error', $ex->getMessage());
+            }
+
+        }
         $template->render();
     }
 }

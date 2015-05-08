@@ -1,11 +1,14 @@
 <div class="col-md-12">
+    <h1 class=" text-center">My Profile</h1>
+
     <div class="col-md-12">
         <?php if (isset($error)) {?>
             <div class="alert alert-danger" role="alert"><?=$error?></div>
         <?php  }?>
+        <?php if (isset($success)) {?>
+            <div class="alert alert-success" role="alert"><?=$success?></div>
+        <?php  }?>
     </div>
-
-    <h1 class=" text-center">My Profile</h1>
 
     <div class="col-md-6">
         <form name="edit-profile-info" method="post">

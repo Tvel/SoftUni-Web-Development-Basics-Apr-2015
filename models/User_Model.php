@@ -21,7 +21,7 @@ class User_Model {
 
         $user->email = $email;
         $user->about = $about;
-
+        $user->setMeta('cast.about', 'text');
         R::store($user);
         return $user;
     }
