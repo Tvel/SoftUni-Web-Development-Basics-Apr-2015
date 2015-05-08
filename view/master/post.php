@@ -4,18 +4,19 @@
 
         <div class="blog-post">
             <h2 class="blog-post-title"><?=$post->title?></h2>
-            <p class="blog-post-meta"><?=$post->date?> by <a href="<?=SITE_ROOT_URL?>users/profile/<?=$post->users->id?>"><?=$post->users->username?></a></p>
+            <p class="blog-post-info"><?=$post->date?> by <a href="<?=SITE_ROOT_URL?>users/profile/<?=$post->users->id?>"><?=$post->users->username?></a></p>
 
-            <p class="blog-post-meta">Tags:
-                <?= implode(',', array_map(create_function('$o', 'return $o->name;'), $post->sharedTags))?>
+            <p class="blog-post-tags">Tags:
+                <?php foreach( $post->sharedTags as $tag ) {
+                    echo '<a href="'.SITE_ROOT_URL.'blog/tag/'.$tag->id.'">'.$tag->name.'</a>';
+                } ?>
+                <?php // implode(',', array_map(create_function('$o', 'return $o->name;'), $post->sharedTags)) ?>
             </p>
-
             <?=$post->text?>
-
         </div><!-- /.blog-post -->
+
         <div class="blog-post">
             <h3>Comments:</h3>
-
             <?php foreach ($post->with("ORDER BY date")->ownComments as $comment) {
                 $email = '';
                 if($comment->users_id === null) {
@@ -28,7 +29,6 @@
                 $size = 64;
                 $grav_url = "http://www.gravatar.com/avatar/" . md5( strtolower( trim( $email ) ) ) . "?d=" . urlencode( $default ) . "&s=" . $size;
                 ?>
-
             <div class="media">
                 <div class="media-left">
                     <a href="#">
@@ -45,9 +45,6 @@
                 </div>
             </div>
             <?php } ?>
-
-
-
         </div>
 
         <div class="blog-post col-md-10 col-md-offset-1">

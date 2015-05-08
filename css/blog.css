@@ -144,10 +144,21 @@ h6, .h6 {
   margin-bottom: 5px;
   font-size: 40px;
 }
-.blog-post-meta {
-  margin-bottom: 20px;
-  color: #999;
+.blog-post-title a {
+    color: rgb(51, 51, 51);
 }
+.blog-post-title a:hover {
+    text-decoration: none;
+}
+.blog-post-info {
+    margin-bottom: 5px;
+    color: #999;
+}
+.blog-post-tags {
+    margin-bottom: 20px;
+    color: #999;
+}
+
 
 
 /*

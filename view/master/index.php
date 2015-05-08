@@ -3,14 +3,18 @@
     if ($posts !== null) foreach ($posts as $post) {
     ?>
     <div class="blog-post">
-        <h2 class="blog-post-title"><?=$post->title?></h2>
-        <p class="blog-post-meta"><?=$post->date?> by <a href="<?=SITE_ROOT_URL?>users/profile/<?=$post->users->id?>"><?=$post->users->username?></a></p>
+        <h2 class="blog-post-title"> <a href="<?=SITE_ROOT_URL?>blog/post/<?=$post->id?>"><?=$post->title?></a></h2>
+        <p class="blog-post-info"><?=$post->date?> by <a href="<?=SITE_ROOT_URL?>users/profile/<?=$post->users->id?>"><?=$post->users->username?></a></p>
 
-        <p class="blog-post-meta">Tags:
-            <?= implode(',', array_map(create_function('$o', 'return $o->name;'), $post->sharedTags))?>
+        <p class="blog-post-tags">Tags:
+            <?php foreach( $post->sharedTags as $tag ) {
+                echo '<a href="'.SITE_ROOT_URL.'blog/tag/'.$tag->id.'">'.$tag->name.'</a> ';
+            } ?>
+            <?php // implode(',', array_map(create_function('$o', 'return $o->name;'), $post->sharedTags))?>
         </p>
 
-        <?=$post->text?>
+        <p><?=mb_substr(Helper::SanatizeString($post->text),0,200)?><a href="<?=SITE_ROOT_URL?>blog/post/<?=$post->id?>">... Read more</a></p>
+
 
         <p class="blog-post-meta"> <a href="<?=SITE_ROOT_URL?>blog/post/<?=$post->id?>">
                 Comments :

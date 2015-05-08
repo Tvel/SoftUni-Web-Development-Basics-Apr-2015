@@ -89,6 +89,7 @@ class Blog_Controller {
             $blog_model->NewComment($post, $text, $name, $email);
         }
 
+
         $template->render();
     }
 
