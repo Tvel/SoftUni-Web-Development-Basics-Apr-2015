@@ -16,7 +16,6 @@ class Blog_Controller {
         $tags = $blog_model->GetTags();
 
         $template = new Template('master/index.php');
-       // $template->set('put', 'putted');
         $template->set('posts', $result);
         $template->set('months', $months);
         $template->set('tags', $tags);
@@ -142,7 +141,6 @@ class Blog_Controller {
         $tags = $blog_model->GetTags();
 
         $template = new Template('master/index.php');
-        // $template->set('put', 'putted');
         $template->set('posts', $result);
         $template->set('months', $months);
         $template->set('tags', $tags);
@@ -165,7 +163,7 @@ class Blog_Controller {
     public function search(){
         $filter = Helper::SanatizeString($_GET['filter']);
 
-        $page = intval( Parameters::get(0) ); // /blog/search/:page?filter=
+        $page = intval( Parameters::get(0) ); // /blog/search/:page?filter=:filter
         if ($page < 1){
             $page = 1;
         }
@@ -177,7 +175,6 @@ class Blog_Controller {
         $tags = $blog_model->GetTags();
 
         $template = new Template('master/index.php');
-        // $template->set('put', 'putted');
         $template->set('posts', $result['posts']);
         $template->set('months', $months);
         $template->set('tags', $tags);
