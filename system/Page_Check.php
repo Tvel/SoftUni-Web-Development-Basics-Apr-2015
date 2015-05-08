@@ -41,6 +41,10 @@ class Page_Check {
         return self::_Checker('user','myposts');
     }
 
+    public static function EditPost(){
+        return self::_Checker('blog','editpost');
+    }
+
     public static function Login(){
         return self::_Checker('user','login');
     }

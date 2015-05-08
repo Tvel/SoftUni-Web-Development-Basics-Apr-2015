@@ -142,7 +142,8 @@ class Blog_Model {
         return $result;
     }
 
-    public function NewPost($title, $text, $tags){
+    public function NewPost($title, $text, $tags)
+    {
         $post = R::dispense('posts');
         $post->title = $title;
         $post->text = $text;
@@ -151,10 +152,26 @@ class Blog_Model {
 
         $post->users_id = $_SESSION['userId'];
 
-        $this->AddTagsToPost($post,$tags);
+        $this->AddTagsToPost($post, $tags);
 
         R::store($post);
         return $post->id;
+
+    }
+
+    public function EditPost($id, $title, $text, $tags) {
+        $post = self::GetPost($id);
+        $post->title = $title;
+        $post->text = $text;
+        $this->AddTagsToPost($post, $tags);
+
+        R::store($post);
+        return $post->id;
+    }
+
+    public function DeletePost($id) {
+        $post = self::GetPost($id);
+        R::trash( $post );
     }
 
     public function NewComment($post, $text, $name = null, $email = null){

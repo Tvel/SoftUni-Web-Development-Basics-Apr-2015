@@ -10,17 +10,23 @@
 
         <div class="form-group">
             <label for="title" >Title</label>
-            <input name="title" type="text" id="title" class="form-control" placeholder="Title" required autofocus>
+            <input name="title" type="text" id="title" class="form-control" placeholder="Title" value="<?=$postTitle?>" required autofocus>
         </div>
         <div class="form-group">
             <label for="text">Text</label>
-            <textarea name="text" type="text" id="text" class="form-control ckeditor" required></textarea>
+            <textarea name="text" type="text" id="text" class="form-control ckeditor" required><?=$text?></textarea>
         </div>
 
         <div class="form-group">
             <label for="tags" >Tags  <span>(separate by commas)</span></label>
-            <div    style="width: 100%">
-                <input name="tags" type="text" id="tags" class="form-control" placeholder="tag" data-role="tagsinput" >
+            <div style="width: 100% !important">
+                <input name="tags"
+                       type="text"
+                       id="tags"
+                       class="form-control"
+                       placeholder="tag"
+                       data-role="tagsinput"
+                       value="<?=$tags?>" >
             </div>
 
         </div>

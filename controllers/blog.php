@@ -40,6 +40,9 @@ class Blog_Controller {
 
         $template = new Template('master/newpost.php');
         $template->set('title', 'New Post');
+        $template->set('postTitle', null);
+        $template->set('text', null);
+        $template->set('tags',null);
 
         if (isset($_POST['title']) && isset($_POST['text']) ) {
             $title = Helper::SanatizeString( $_POST['title']);
@@ -59,10 +62,57 @@ class Blog_Controller {
             catch (InvalidFormDataException $ex){
                 $template->set('error', $ex->getMessage());
             }
-
         }
 
         $template->render();
+    }
+
+    public function editpost(){
+        $blog_model = new Blog_Model();
+        $post = $blog_model->GetPost(Parameters::get(0));
+
+        if(!Auth_Check::CheckIfCanEditPost($post)){
+            throw new NotAuthenticatedException("You don't have the rights to edit posts");
+        }
+
+        $postTags = implode(',', array_map(create_function('$o', 'return $o->name;'), $post->sharedTags));
+        $template = new Template('master/newpost.php');
+        $template->set('title', 'Edit Post');
+        $template->set('postTitle', $post->title);
+        $template->set('text', $post->text);
+        $template->set('tags', $postTags);
+
+        if (isset($_POST['title']) && isset($_POST['text']) ) {
+            $title = Helper::SanatizeString( $_POST['title']);
+            $text = $_POST['text'];
+            $tags = null;
+            if (isset($_POST['tags'])) {
+                $tags = Helper::SanatizeString($_POST['tags']);
+            }
+            try {
+                $id = $blog_model->EditPost($post->id, $title, $text, $tags);
+
+                header("Location: ".SITE_ROOT_URL."blog/post/".$id);
+                die();
+            }
+            catch (InvalidFormDataException $ex){
+                $template->set('error', $ex->getMessage());
+            }
+        }
+
+        $template->render();
+    }
+
+    public function deletepost(){
+        $blog_model = new Blog_Model();
+        $post = $blog_model->GetPost(Parameters::get(0));
+        if(!Auth_Check::CheckIfCanEditPost($post)){
+            throw new NotAuthenticatedException("You don't have the rights to delete posts");
+        }
+        $blog_model->DeletePost($post->id);
+
+        header("Location: ".SITE_ROOT_URL."user/myposts/");
+        die();
     }
 
     public function post(){
@@ -87,7 +137,6 @@ class Blog_Controller {
 
             $blog_model->NewComment($post, $text, $name, $email);
         }
-
 
         $template->render();
     }

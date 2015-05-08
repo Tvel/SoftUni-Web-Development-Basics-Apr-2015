@@ -49,6 +49,9 @@ class Auth_Check {
     }
 
     public static function CheckIfOwnerOfPost($post) {
+        if (!isset($_SESSION['userId'] )){
+            return false;
+        }
         if ($post->users->id === $_SESSION['userId']) {
             return true;
         }
@@ -56,6 +59,9 @@ class Auth_Check {
     }
 
     public static function CheckIfOwnerOfComment($comment) {
+        if (!isset($_SESSION['userId'] )){
+            return false;
+        }
         if ($comment->users->id === $_SESSION['userId']) {
             return true;
         }
@@ -63,6 +69,9 @@ class Auth_Check {
     }
 
     public static function CheckIfCanEditPost($post) {
+        if (!isset($_SESSION['userId'] )){
+            return false;
+        }
         if (self::CheckIfOwnerOfPost($post)) {
             return true;
         }
@@ -73,6 +82,9 @@ class Auth_Check {
     }
 
     public static function CheckIfCanEditComment($comment) {
+        if (!isset($_SESSION['userId'] )){
+            return false;
+        }
         if (self::CheckIfOwnerOfComment($comment)) {
             return true;
         }
