@@ -158,6 +158,11 @@ h6, .h6 {
     margin-bottom: 20px;
     color: #999;
 }
+.blog-post-tag {
+    padding: 2px 5px 2px 5px;
+    border: 1px solid #9c9c9c;
+    border-radius: 10px;
+}
 
 
 

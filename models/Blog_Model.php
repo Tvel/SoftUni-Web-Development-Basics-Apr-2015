@@ -1,4 +1,5 @@
 <?php
+mb_internal_encoding("UTF-8");
 
 class Blog_Model {
 
@@ -124,7 +125,7 @@ class Blog_Model {
     }
 
     public function GetTags() {
-        $result = R::findAll('tags', ' ORDER BY name' );
+        $result = R::find('tags', ' ORDER BY visits DESC, name LIMIT 5' );
         return $result;
     }
 

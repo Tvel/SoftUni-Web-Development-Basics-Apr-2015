@@ -8,7 +8,7 @@
 
             <p class="blog-post-tags">Tags:
                 <?php foreach( $post->sharedTags as $tag ) {
-                    echo '<a href="'.SITE_ROOT_URL.'blog/tag/'.$tag->id.'">'.$tag->name.'</a>';
+                    echo '<a class="blog-post-tag" href="'.SITE_ROOT_URL.'blog/tag/'.$tag->id.'">'.$tag->name.'</a> ';
                 } ?>
                 <?php // implode(',', array_map(create_function('$o', 'return $o->name;'), $post->sharedTags)) ?>
             </p>
