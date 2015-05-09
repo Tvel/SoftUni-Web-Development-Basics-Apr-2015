@@ -126,6 +126,20 @@ class User_Controller {
         $template->render();
     }
 
+    public function profile(){
+        $template = new Template('user/profile.php');
+        $user_id = Parameters::get(0);
+        $user_model = new User_Model();
+
+        $user = $user_model->GetUser($user_id);
+
+        $template->set('user', $user);
+        $template->set('posts', $user->with('ORDER BY visits DESC LIMIT 5')->ownPosts);
+        $template->set('comments', $user->with('ORDER BY date DESC LIMIT 5')->ownComments);
+
+        $template->render();
+    }
+
     public function myposts(){
         $template = new Template('user/myposts.php');
         $blog_model = new Blog_Model();

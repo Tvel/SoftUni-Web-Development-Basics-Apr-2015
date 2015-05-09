@@ -4,7 +4,7 @@
     ?>
     <div class="blog-post">
         <h2 class="blog-post-title"> <a href="<?=SITE_ROOT_URL?>blog/post/<?=$post->id?>"><?=$post->title?></a></h2>
-        <p class="blog-post-info"><?=$post->date?> by <a href="<?=SITE_ROOT_URL?>users/profile/<?=$post->users->id?>"><?=$post->users->username?></a></p>
+        <p class="blog-post-info"><?=$post->date?> by <a href="<?=SITE_ROOT_URL?>user/profile/<?=$post->users->id?>"><?=$post->users->username?></a></p>
 
         <p class="blog-post-tags">Tags:
             <?php foreach( $post->sharedTags as $tag ) {

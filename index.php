@@ -1,5 +1,6 @@
 <?php
 mb_internal_encoding("UTF-8");
+error_reporting(E_ALL);
 define( 'SITE_DS', DIRECTORY_SEPARATOR );
 define( 'SITE_ROOT_DIR', dirname( __FILE__ ) . SITE_DS );
 define( 'SITE_ROOT_PATH', basename( dirname( __FILE__ ) ) . SITE_DS );
@@ -56,10 +57,7 @@ try {
         }
     }
     else {
-        include_once 'controllers/Error.php';
-        $controller_class =  ucfirst( 'error' ) . '_Controller';
-        $instance = new $controller_class();
-        call_user_func_array( array( $instance, 'index' ), array( 'Wrong controller '.$controller ) );
+        throw new Exception('Wrong controller '.$controller);
     }
 }
 catch ( NotAuthenticatedException  $ex) {
