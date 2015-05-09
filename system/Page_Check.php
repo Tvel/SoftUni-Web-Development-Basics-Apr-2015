@@ -83,11 +83,15 @@ class Page_Check {
     }
 
     public static function AdminUsers(){
-        return self::_AdminChecker('blog','users');
+        return self::_AdminChecker('users','users');
+    }
+
+    public static function AdminTags(){
+        return self::_AdminChecker('blog','tags');
     }
 
     public static function AdminEditUser(){
-        return self::_AdminChecker('blog','edituser');
+        return self::_AdminChecker('users','edituser');
     }
 
 }

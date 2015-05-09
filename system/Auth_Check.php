@@ -124,4 +124,14 @@ class Auth_Check {
         return false;
     }
 
+    public static function CheckIfCanEditTags() {
+        if (!isset($_SESSION['userId'] )){
+            return false;
+        }
+        if (self::OnlyAdmin()) {
+            return true;
+        }
+        return false;
+    }
+
 }

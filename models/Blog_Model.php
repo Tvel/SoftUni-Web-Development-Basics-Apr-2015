@@ -252,4 +252,39 @@ class Blog_Model {
 
         R::store($post);
     }
+
+    public function GetAllTags(){
+        $tags = R::findAll('tags');
+        return $tags;
+    }
+
+    public function GetTag($id){
+        $tag = R::findOne('tags', 'id = ?', [$id]);
+        if ($tag === null) {
+            throw new InvalidIdException("This tag does not exist");
+        }
+
+        return $tag;
+    }
+
+    public function EditTag($id, $name, $visits){
+        if(!Auth_Check::CheckIfCanEditTags()){
+            throw new NotAuthenticatedException("You don't have the rights to edit tags");
+        }
+        $tag = self::GetTag($id);
+        $tag->name = $name;
+        $tag->visits = $visits;
+
+        R::store($tag);
+        return $tag;
+    }
+
+    public function DeleteTag($id){
+        if(!Auth_Check::CheckIfCanEditTags()){
+            throw new NotAuthenticatedException("You don't have the rights to delete tags");
+        }
+        $tag = self::GetTag($id);
+        R::trash($tag);
+    }
+
 }

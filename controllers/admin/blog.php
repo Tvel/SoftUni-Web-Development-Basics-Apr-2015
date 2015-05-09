@@ -182,7 +182,7 @@ class Blog_AdminController {
         $template->render();
     }
 
-    public function deleteComment(){
+    public function deletecomment(){
         $blog_model = new Blog_Model();
         $comment = $blog_model->GetComment(Parameters::get(0));
         if(!Auth_Check::CheckIfCanEditComment($comment)){
@@ -194,4 +194,74 @@ class Blog_AdminController {
         die();
     }
 
+    public function tags(){
+        if (!Auth_Check::CheckIfCanEditTags()) {
+            throw new NotAuthenticatedException("You have no rights to view all tags");
+        }
+        $template = new Template('admin/blog/tags.php');
+        $template->set_header('admin/header.php');
+        $template->set('pageTitle', 'Tags');
+        $blog_model = new Blog_Model();
+        $tags = $blog_model->GetAllTags();
+
+        $tags_json = array();
+        foreach ($tags as $tag) {
+            array_push($tags_json,array(
+                'id' => $tag->id,
+                'name' => $tag->name,
+                'count' =>  $tag->countShared('posts'),
+                'visits' => $tag->visits
+            ) );
+
+        }
+
+        $tags_json = json_encode($tags_json);
+        $template->set('tags', $tags_json);
+
+        $template->render();
+    }
+
+    public function edittag(){
+        if(!Auth_Check::CheckIfCanEditTags()){
+            throw new NotAuthenticatedException("You don't have the rights to edit tags");
+        }
+        $blog_model = new Blog_Model();
+        $tag =  $blog_model->GetTag(Parameters::get(0));
+
+
+        $template = new Template('admin/blog/edittag.php');
+        $template->set_header('admin/header.php');
+        $template->set('title', 'Admin Edit Tag');
+
+        $template->set('name', $tag->name);
+        $template->set('visits', $tag->visits);
+
+        if ( isset($_POST['name']) ) {
+            $name = Helper::SanatizeString( $_POST['name']);
+            $visits = Helper::SanatizeString( $_POST['visits']);
+
+            try {
+                $id = $blog_model->EditTag($tag->id, $name, $visits);
+
+                header("Location: ".SITE_ROOT_URL."admin/blog/tags/");
+                die();
+            }
+            catch (InvalidFormDataException $ex){
+                $template->set('error', $ex->getMessage());
+            }
+        }
+
+        $template->render();
+    }
+
+    public function deletetag(){
+        if(!Auth_Check::CheckIfCanEditTags()){
+            throw new NotAuthenticatedException("You don't have the rights to delete tags");
+        }
+        $blog_model = new Blog_Model();
+        $blog_model->DeleteTag(Parameters::get(0));
+
+        header("Location: ".SITE_ROOT_URL."admin/blog/tags/");
+        die();
+    }
 }

@@ -34,6 +34,7 @@
             <?php } ?>
             <?php if (Auth_Check::OnlyAdmin()) { ?>
                 <a class="blog-nav-item  <?php if (Page_Check::AdminPosts()) echo 'active'; ?>" href="<?=SITE_ROOT_URL?>admin/blog/posts">Edit Posts</a>
+                <a class="blog-nav-item  <?php if (Page_Check::AdminTags()) echo 'active'; ?>" href="<?=SITE_ROOT_URL?>admin/blog/tags">Edit Tags</a>
                 <a class="blog-nav-item  <?php if (Page_Check::AdminUsers()) echo 'active'; ?>" href="<?=SITE_ROOT_URL?>admin/users/users">Edit Users</a>
             <?php } ?>
 
