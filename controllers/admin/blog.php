@@ -2,7 +2,7 @@
 class Blog_AdminController {
 
     public function index (){
-        $this->stats();
+        $this->comments();
     }
 
     public function stats(){

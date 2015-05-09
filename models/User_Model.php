@@ -26,6 +26,18 @@ class User_Model {
         return $user;
     }
 
+    public function DeleteUser($id){
+        if (!Auth_Check::OnlyAdmin()) {
+            throw new NotAuthenticatedException("You have no rights to delete this user");
+        }
+        $user = R::findOne('users', 'id = ?', [ $id ]);
+        if ($user === null) {
+            throw new InvalidIdException("User does not exist");
+        }
+
+        R::trash($user);
+    }
+
     public function EditInfo($id, $email, $about){
         $user = $this->GetUser($id);
         if (!Auth_Check::CheckIfCanEditUser($user)) {

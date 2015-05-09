@@ -42,7 +42,7 @@
                 <?php if (Auth_Check::Regular() ){ ?>
                     <a class="blog-nav-item pull-right" href="<?=SITE_ROOT_URL?>user/logout">Logout</a>
                     <?php if (Auth_Check::Moderator() ){ ?>
-                        <a class="blog-nav-item pull-right" href="<?=SITE_ROOT_URL?>admin/blog/stats">Administration</a>
+                        <a class="blog-nav-item pull-right" href="<?=SITE_ROOT_URL?>admin/blog/comments">Administration</a>
                     <?php } ?>
                     <a class="blog-nav-item pull-right  <?php if (Page_Check::MyProfile()) echo 'active'; ?>" href="<?=SITE_ROOT_URL?>user/myprofile">Hello, <?=$_SESSION['userUsername']?></a>
                 <?php } else { ?>

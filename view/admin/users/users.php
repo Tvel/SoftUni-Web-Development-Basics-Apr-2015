@@ -49,7 +49,8 @@
                 },
                 { "data": "id",
                     render: function ( data, type, full, meta ) {
-                        return ('<a class="btn btn-danger btn-sm" href="<?=SITE_ROOT_URL?>admin/blog/deleteuser/'+data+'">Delete</a>');
+                        var text = "Are you sure?";
+                        return ('<a class="btn btn-danger btn-sm" onclick="return confirm(\'Are you sure?\');" href="<?=SITE_ROOT_URL?>admin/users/deleteuser/'+data+'">Delete</a>');
                     }
                 },
             ],
@@ -59,6 +60,7 @@
 
         })
     });
+
 
 </script>
 <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js" ></script>

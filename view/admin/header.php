@@ -29,7 +29,7 @@
         <nav class="blog-nav">
 
             <?php if (Auth_Check::Moderator()) { ?>
-                <a class="blog-nav-item  <?php if (Page_Check::AdminStats()) echo 'active'; ?>" href="<?=SITE_ROOT_URL?>admin/blog/stats">Stats</a>
+<!--                <a class="blog-nav-item  --><?php //if (Page_Check::AdminStats()) echo 'active'; ?><!--" href="--><?//=SITE_ROOT_URL?><!--admin/blog/stats">Stats</a>-->
                 <a class="blog-nav-item  <?php if (Page_Check::AdminComments()) echo 'active'; ?>" href="<?=SITE_ROOT_URL?>admin/blog/comments">Edit Comments</a>
             <?php } ?>
             <?php if (Auth_Check::OnlyAdmin()) { ?>

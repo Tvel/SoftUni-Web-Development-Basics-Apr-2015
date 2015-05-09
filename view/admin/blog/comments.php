@@ -69,7 +69,7 @@
                 },
                 { "data": "id", className: "all",
                     render: function ( data, type, full, meta ) {
-                        return ('<a class="btn btn-danger btn-sm" href="<?=SITE_ROOT_URL?>admin/blog/deletecomment/'+data+'">Delete</a>');
+                        return ('<a class="btn btn-danger btn-sm" onclick="return confirm(\'Are you sure?\');" href="<?=SITE_ROOT_URL?>admin/blog/deletecomment/'+data+'">Delete</a>');
                     }
                 },
             ],

@@ -97,4 +97,15 @@ class Users_AdminController {
         $template->set('roles', $user_model->GetRoles());
         $template->render();
     }
+
+    public function deleteuser(){
+        if(!Auth_Check::OnlyAdmin()){
+            throw new NotAuthenticatedException("You don't have the rights to delete users");
+        }
+        $user_model = new User_Model();
+        $user_model->DeleteUser(Parameters::get(0));
+
+        header("Location: ".SITE_ROOT_URL."admin/users/users/");
+        die();
+    }
 }

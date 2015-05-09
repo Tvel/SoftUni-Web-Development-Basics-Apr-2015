@@ -55,10 +55,10 @@
                 { "data": "id",
                     render: function ( data, type, full, meta ) {
                         <?php if(Page_Check::AdminPosts()) : ?>
-                            return ('<a class="btn btn-danger btn-sm" href="<?=SITE_ROOT_URL?>admin/blog/deletepost/'+data+'">Delete</a>');
+                            return ('<a class="btn btn-danger btn-sm" onclick="return confirm(\'Are you sure?\');" href="<?=SITE_ROOT_URL?>admin/blog/deletepost/'+data+'">Delete</a>');
                         <?php endif; ?>
                         <?php if(Page_Check::MyPosts()) : ?>
-                            return ('<a class="btn btn-danger btn-sm" href="<?=SITE_ROOT_URL?>blog/deletepost/'+data+'">Delete</a>');
+                            return ('<a class="btn btn-danger btn-sm" onclick="return confirm(\'Are you sure?\');" href="<?=SITE_ROOT_URL?>blog/deletepost/'+data+'">Delete</a>');
                         <?php endif; ?>
                     }
                 },
