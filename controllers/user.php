@@ -148,6 +148,8 @@ class User_Controller {
         }
         $posts = $blog_model->GetUserPosts($_SESSION['userId']);
 
+        $template->set('pageTitle', 'My Posts');
+
         $users_posts = array();
         foreach ($posts as $post) {
             array_push($users_posts,array(

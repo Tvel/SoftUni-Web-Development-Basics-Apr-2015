@@ -8,6 +8,15 @@ class Page_Check {
         }
         return false;
     }
+    private static function _AdminChecker($controller, $method){
+        if(!Parameters::get_admin()) {
+            return false;
+        }
+        if ( self::_Checker($controller,$method) ) {
+            return true;
+        }
+        return false;
+    }
 
     public static function Home(){
         return self::_Checker('blog','index');
@@ -51,6 +60,26 @@ class Page_Check {
 
     public static function Register(){
         return self::_Checker('blog','register');
+    }
+
+    public static function AdminStats(){
+        return self::_AdminChecker('blog','stats');
+    }
+
+    public static function AdminPosts(){
+        return self::_AdminChecker('blog','posts');
+    }
+
+    public static function AdminEditPost(){
+        return self::_AdminChecker('blog','editpost');
+    }
+
+    public static function AdminComments(){
+        return self::_AdminChecker('blog','comments');
+    }
+
+    public static function AdminUsers(){
+        return self::_AdminChecker('blog','users');
     }
 
 }

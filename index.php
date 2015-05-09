@@ -46,7 +46,13 @@ Parameters::set_method($method);
 try {
     if ( isset( $controller ) && file_exists( 'controllers/' . $controller_path . $controller . '.php' ) ) {
         include_once 'controllers/' . $controller_path . $controller . '.php';
-        $controller_class =  ucfirst( $controller ) . '_Controller';
+        if(Parameters::get_admin()){
+            $controller_class =  ucfirst( $controller ) . '_AdminController';
+        }
+        else {
+            $controller_class =  ucfirst( $controller ) . '_Controller';
+        }
+
         $instance = new $controller_class();
 
         if( method_exists( $instance, $method ) ) {

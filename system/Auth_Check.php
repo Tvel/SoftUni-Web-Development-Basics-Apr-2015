@@ -18,9 +18,9 @@ class Auth_Check {
         if ($_SESSION['userRole'] === R::enum('role:admin')->name) {
             return true;
         }
-        if ($_SESSION['userRole'] === R::enum('role:poster')->name) {
-            return true;
-        }
+//        if ($_SESSION['userRole'] === R::enum('role:poster')->name) {
+//            return true;
+//        }
         if ($_SESSION['userRole'] === R::enum('role:moderator')->name) {
             return true;
         }

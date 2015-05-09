@@ -1,5 +1,5 @@
 <div class="col-md-12">
-    <h1 class=" text-center">My Posts</h1>
+    <h1 class=" text-center"><?=$pageTitle?></h1>
     <?php if (isset($error)) {?>
         <div class="alert alert-danger" role="alert"><?=$error?></div>
     <?php  }?>
@@ -44,12 +44,22 @@
                 { "data": "comments"},
                 { "data": "id",
                     render: function ( data, type, full, meta ) {
-                        return ('<a class="btn btn-warning btn-sm" href="<?=SITE_ROOT_URL?>blog/editpost/'+data+'">Edit</a>');
+                        <?php if(Page_Check::AdminPosts()) : ?>
+                            return ('<a class="btn btn-warning btn-sm" href="<?=SITE_ROOT_URL?>admin/blog/editpost/'+data+'">Edit</a>');
+                        <?php endif; ?>
+                        <?php if(Page_Check::MyPosts()) : ?>
+                            return ('<a class="btn btn-warning btn-sm" href="<?=SITE_ROOT_URL?>blog/editpost/'+data+'">Edit</a>');
+                        <?php endif; ?>
                     }
                 },
                 { "data": "id",
                     render: function ( data, type, full, meta ) {
-                        return ('<a class="btn btn-danger btn-sm" href="<?=SITE_ROOT_URL?>blog/deletepost/'+data+'">Delete</a>');
+                        <?php if(Page_Check::AdminPosts()) : ?>
+                            return ('<a class="btn btn-danger btn-sm" href="<?=SITE_ROOT_URL?>admin/blog/deletepost/'+data+'">Delete</a>');
+                        <?php endif; ?>
+                        <?php if(Page_Check::MyPosts()) : ?>
+                            return ('<a class="btn btn-danger btn-sm" href="<?=SITE_ROOT_URL?>blog/deletepost/'+data+'">Delete</a>');
+                        <?php endif; ?>
                     }
                 },
                 ],
