@@ -45,9 +45,19 @@
                 </div>
                 <div class="media-body">
                     <?php  if($comment->users_id === null) { ?>
-                        <h4 class="media-heading"><?=$comment->name?></h4>
+                        <h4 class="media-heading">
+                            <?=$comment->name?>
+                            <?php  if(Auth_Check::CheckIfCanEditComment($comment)) : ?>
+                                <a class="btn btn-warning btn-xs" href="<?=SITE_ROOT_URL?>admin/blog/editcomment/<?=$comment->id?>">Edit</a>
+                            <?php endif; ?>
+                        </h4>
                     <?php } else { ?>
-                        <h4 class="media-heading"><a href="<?=SITE_ROOT_URL?>users/profile/<?=$comment->users->id?>"><?=$comment->users->username?></a></h4>
+                        <h4 class="media-heading">
+                            <a href="<?=SITE_ROOT_URL?>users/profile/<?=$comment->users->id?>"><?=$comment->users->username?></a>
+                            <?php  if(Auth_Check::CheckIfCanEditComment($comment)) : ?>
+                                <a class="btn btn-warning btn-xs" href="<?=SITE_ROOT_URL?>admin/blog/editcomment/<?=$comment->id?>">Edit</a>
+                            <?php endif; ?>
+                        </h4>
                     <?php } ?>
                     <?=$comment->text?>
                 </div>
