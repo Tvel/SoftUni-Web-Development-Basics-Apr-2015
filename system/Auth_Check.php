@@ -48,6 +48,16 @@ class Auth_Check {
         return true;
     }
 
+    public static function CheckIfOwnerOfUser($user) {
+        if (!isset($_SESSION['userId'] )){
+            return false;
+        }
+        if ($user->id === $_SESSION['userId']) {
+            return true;
+        }
+        return false;
+    }
+
     public static function CheckIfOwnerOfPost($post) {
         if (!isset($_SESSION['userId'] )){
             return false;
@@ -63,6 +73,19 @@ class Auth_Check {
             return false;
         }
         if ($comment->users->id === $_SESSION['userId']) {
+            return true;
+        }
+        return false;
+    }
+
+    public static function CheckIfCanEditUser($user) {
+        if (!isset($_SESSION['userId'] )){
+            return false;
+        }
+        if (self::CheckIfOwnerOfUser($user)) {
+            return true;
+        }
+        if (self::OnlyAdmin()) {
             return true;
         }
         return false;
