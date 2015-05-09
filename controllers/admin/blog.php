@@ -92,4 +92,106 @@ class Blog_AdminController {
         header("Location: ".SITE_ROOT_URL."admin/blog/posts/");
         die();
     }
+
+    public function comments(){
+        if (!Auth_Check::Moderator()) {
+            throw new NotAuthenticatedException("You have no rights to view all comments");
+        }
+        $template = new Template('admin/blog/comments.php');
+        $template->set_header('admin/header.php');
+        $template->set('pageTitle', 'Comments');
+        $blog_model = new Blog_Model();
+        $comments = $blog_model->GetComments();
+
+        $comments_json = array();
+        foreach ($comments as $comment) {
+            if($comment->posts_id == null) {
+                $title = null;
+                $posts_id = null;
+            }
+            else {
+                $title = $comment->posts->title;
+                $posts_id = $comment->posts_id;
+            }
+            if($comment->users_id == null){
+                $userName = $comment->name;
+                $userEmail = $comment->email;
+            }
+            else {
+                $userName = $comment->users->username;
+                $userEmail =  $comment->users->email;
+            }
+            array_push($comments_json,array(
+                'id' => $comment->id,
+                'user' => $userName,
+                'email' =>  $userEmail,
+                'date' => $comment->date,
+                'post' => $title,
+                'text' => $comment->text,
+                'users_id' => $comment->users_id,
+                'posts_id' => $posts_id
+            ) );
+
+        }
+
+        $comments_json = json_encode($comments_json);
+        $template->set('comments', $comments_json);
+
+        $template->render();
+    }
+
+    public function editcomment(){
+        $blog_model = new Blog_Model();
+        $comment= $blog_model->GetComment(Parameters::get(0));
+        if(!Auth_Check::CheckIfCanEditComment($comment)){
+            throw new NotAuthenticatedException("You don't have the rights to edit comments");
+        }
+
+        $template = new Template('admin/blog/editcomment.php');
+        $template->set_header('admin/header.php');
+        $template->set('title', 'Admin Edit Comment');
+
+        if($comment->users_id == null){
+            $userName = $comment->name;
+            $userEmail = $comment->email;
+        }
+        else {
+            $userName = $comment->users->username;
+            $userEmail =  $comment->users->email;
+        }
+
+        $template->set('user', $userName);
+        $template->set('email', $userEmail);
+        $template->set('text', $comment->text);
+
+
+        if ( isset($_POST['text']) ) {
+            $text = Helper::SanatizeString( $_POST['text']);
+
+            try {
+                $id = $blog_model->EditComment($comment->id, $text);
+
+                header("Location: ".SITE_ROOT_URL."admin/blog/comments/");
+                die();
+            }
+            catch (InvalidFormDataException $ex){
+                $template->set('error', $ex->getMessage());
+            }
+        }
+
+        $template->render();
+    }
+
+    public function deleteComment(){
+        $blog_model = new Blog_Model();
+        $comment = $blog_model->GetComment(Parameters::get(0));
+        if(!Auth_Check::CheckIfCanEditComment($comment)){
+            throw new NotAuthenticatedException("You don't have the rights to delete comments");
+        }
+        $blog_model->DeleteComment($comment->id);
+
+        header("Location: ".SITE_ROOT_URL."admin/blog/comments/");
+        die();
+    }
+
 }

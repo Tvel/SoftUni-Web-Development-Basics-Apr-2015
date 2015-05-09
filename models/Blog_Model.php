@@ -192,6 +192,38 @@ class Blog_Model {
         R::store($post);
     }
 
+    public function GetComments(){
+        $comments = R::findAll('comments');
+        return $comments;
+    }
+
+    public function GetComment($commemntId){
+        $comment = R::findOne('comments', 'id = ?', [$commemntId]);
+        if ($comment === null) {
+            throw new InvalidIdException("This comment does not exist");
+        }
+
+        return $comment;
+    }
+
+    public function EditComment($id, $text) {
+        $comment = self::GetComment($id);
+        if(!Auth_Check::CheckIfCanEditComment($comment)){
+            throw new NotAuthenticatedException("You don't have the rights to edit comments");
+        }
+        $comment->text = $text;
+        R::store($comment);
+        return $comment;
+    }
+
+    public function DeleteComment($id) {
+        $comment = self::GetComment($id);
+        if(!Auth_Check::CheckIfCanEditComment($comment)){
+            throw new NotAuthenticatedException("You don't have the rights to delete comments");
+        }
+        R::trash( $comment );
+    }
+
     public function AddTagsToPost($post, $tags) {
         if ($tags !== null) {
             $tags = explode(',', $tags);

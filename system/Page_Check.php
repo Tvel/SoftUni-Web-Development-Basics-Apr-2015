@@ -78,8 +78,16 @@ class Page_Check {
         return self::_AdminChecker('blog','comments');
     }
 
+    public static function AdminEditComment(){
+        return self::_AdminChecker('blog','editcomment');
+    }
+
     public static function AdminUsers(){
         return self::_AdminChecker('blog','users');
+    }
+
+    public static function AdminEditUser(){
+        return self::_AdminChecker('blog','edituser');
     }
 
 }

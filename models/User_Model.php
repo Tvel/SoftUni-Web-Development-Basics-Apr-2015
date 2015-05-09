@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Server
- * Date: 8.5.2015 г.
- * Time: 19:59
- */
 
 class User_Model {
 
@@ -32,6 +26,14 @@ class User_Model {
             throw new InvalidFormDataException("Old password does not match");
         }
 
+        $user->password = $newPassword;
+        R::store($user);
+
+        return $user;
+    }
+
+    public function AdminChangePass($id,  $newPassword){
+        $user = $this->GetUser($id);
         $user->password = $newPassword;
         R::store($user);
 

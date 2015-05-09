@@ -17,9 +17,8 @@
     <link href="<?=SITE_ROOT_URL?>css/bootstrap.css" rel="stylesheet">
     <link href="<?=SITE_ROOT_URL?>css/blog.css" rel="stylesheet">
     <link href="<?=SITE_ROOT_URL?>css/bootstrap-tagsinput.css" rel="stylesheet">
-    <?php if(Page_Check::MyPosts()) : ?>
-        <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.css">
-    <?php endif; ?>
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/responsive/1.0.4/css/dataTables.responsive.css">
 
     <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
 </head>
