@@ -160,7 +160,11 @@ class Blog_Model {
     }
 
     public function EditPost($id, $title, $text, $tags) {
+
         $post = self::GetPost($id);
+        if(!Auth_Check::CheckIfCanEditPost($post)){
+            throw new NotAuthenticatedException("You don't have the rights to edit post");
+        }
         $post->title = $title;
         $post->text = $text;
         $this->AddTagsToPost($post, $tags);

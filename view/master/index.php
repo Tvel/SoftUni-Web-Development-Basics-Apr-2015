@@ -3,8 +3,18 @@
     if ($posts !== null) foreach ($posts as $post) {
     ?>
     <div class="blog-post">
-        <h2 class="blog-post-title"> <a href="<?=SITE_ROOT_URL?>blog/post/<?=$post->id?>"><?=$post->title?></a></h2>
-        <p class="blog-post-info"><?=$post->date?> by <a href="<?=SITE_ROOT_URL?>user/profile/<?=$post->users->id?>"><?=$post->users->username?></a></p>
+        <h2 class="blog-post-title">
+            <a href="<?=SITE_ROOT_URL?>blog/post/<?=$post->id?>"><?=$post->title?></a>
+            <?php  if(Auth_Check::CheckIfCanEditPost($post)) : ?>
+                <a class="btn btn-warning btn-xs" href="<?=SITE_ROOT_URL?>blog/editpost/<?=$post->id?>">Edit</a>
+            <?php endif; ?>
+        </h2>
+        <?php if ($post->users === null) : ?>
+            <p class="blog-post-info"><?=$post->date?> by Anonymous</p>
+        <?php else : ?>
+            <p class="blog-post-info"><?=$post->date?> by <a href="<?=SITE_ROOT_URL?>user/profile/<?=$post->users->id?>"><?=$post->users->username?></a></p>
+        <?php endif; ?>
+
 
         <p class="blog-post-tags">Tags:
             <?php foreach( $post->sharedTags as $tag ) {
