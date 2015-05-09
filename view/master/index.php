@@ -10,9 +10,9 @@
             <?php endif; ?>
         </h2>
         <?php if ($post->users === null) : ?>
-            <p class="blog-post-info"><?=$post->date?> by Anonymous</p>
+            <p class="blog-post-info"><?=$post->date?> by Anonymous - Vistis: <?=$post->visits?></p>
         <?php else : ?>
-            <p class="blog-post-info"><?=$post->date?> by <a href="<?=SITE_ROOT_URL?>user/profile/<?=$post->users->id?>"><?=$post->users->username?></a></p>
+            <p class="blog-post-info"><?=$post->date?> by <a href="<?=SITE_ROOT_URL?>user/profile/<?=$post->users->id?>"><?=$post->users->username?></a> - Vistis: <?=$post->visits?></p>
         <?php endif; ?>
 
 
